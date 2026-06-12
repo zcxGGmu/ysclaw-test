@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "diag-20260610-001",
+  "source": {
+    "agent": "agent3",
+    "createdAt": "2025-06-10T00:00:00Z",
+    "software": "openssl",
+    "testcaseIds": ["test_store_cases"]
+  },
+  "problem": {
+    "summary": "SHA1_Final on SG2044 (RVV 1.0 @ VLEN=128) runs entirely in scalar mode: IPC=0.859, test_store_cases=5.0s, 184 lines pure scalar assembly. No RISC-V SHA1 vector assembly exists in OpenSSL — only generic C fallback. HASH_MAKE_STRING consumes 35 scalar instructions per 5-word state.",
+    "evidence": [
+      "perf annotate: SHA1_Final 184 lines, zero v* vector instructions, all scalar",
+      "perf stat: IPC=0.859 (latency-bound), L1 miss=1.541% (not memory-bound), branch_miss=8.135%",
+      "No sha1-riscv64*.pl exists in crypto/sha/asm/ — only x86, ARM, PPC, etc.",
+      "sha_riscv.c provides generic C SHA1, autovectorizer cannot handle SHA1 dependency chains"
+    ]
+  },
+  "rootCause": {
+    "summary": "OpenSSL lacks RISC-V vector SHA1 assembly. Build config already has -march=rv64gcv_zvkned but without SHA1 vector assembly, the C compiler cannot auto-vectorize SHA1's complex round dependencies and message scheduling.",
+    "candidateFiles": [
+      "crypto/sha/asm/sha1-riscv64-zvknha.pl",
+      "crypto/sha/build.info"
+    ],
+    "performanceFactors": [
+      "IPC=0.859 (scalar dependency chain limits ILP on 3-wide C920)",
+      "HASH_MAKE_STRING: 35 scalar instructions for 5 words (7 per word: lw+3srlw+3sb)",
+      "branch_miss=8.135% (elevated, SHA1 loop branches)",
+      "VLEN=128/SEW=32: 4-block parallel could process 4× throughput"
+    ]
+  },
+  "constraints": {
+    "riskLevel": "medium",
+    "mustPreserve": [
+      "SHA1 test vectors must pass (NIST CAVP test cases)",
+      "Scalar C fallback for non-RVV hardware",
+      "Existing SHA-256/SHA-512 vector paths must not regress",
+      "FIPS module integrity (SHA1 not in FIPS but libcrypto must stay consistent)"
+    ]
+  },
+  "validation": {
+    "requiredTests": [
+      "test_sha1",
+      "test_store_cases",
+      "openssl_speed_sha1",
+      "perf_annotate_SHA1_Final"
+    ]
+  }
+}

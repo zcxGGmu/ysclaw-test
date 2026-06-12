@@ -1,0 +1,15 @@
+diff --git a/Configurations/10-main.conf b/Configurations/10-main.conf
+index 1b765a0..9a56106 100644
+--- a/Configurations/10-main.conf
++++ b/Configurations/10-main.conf
+@@ -818,8 +818,8 @@ my %targets = (
+     # specifications,
+     "linux64-riscv64" => {
+         inherit_from     => [ "linux-generic64"],
+-        cflags           => add("-march=rv64gcv_zvkned"),
+-        cxxflags         => add("-march=rv64gcv_zvkned"),
++        cflags           => add("-march=rv64gcv_zba_zbb_zvkned"),
++        cxxflags         => add("-march=rv64gcv_zba_zbb_zvkned"),
+         perlasm_scheme   => "linux64",
+         asm_arch         => 'riscv64',
+     },

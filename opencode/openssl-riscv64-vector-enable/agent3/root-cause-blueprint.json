@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "diag-20250609-001",
+  "source": {
+    "agent": "agent3",
+    "createdAt": "2025-06-09T00:00:00Z",
+    "software": "openssl",
+    "testcaseIds": ["test_evp"]
+  },
+  "problem": {
+    "summary": "SHA-256 hotspot sha256_block_data_order_riscv64 runs entirely in scalar on SG2044 (RVV 1.0 @ VLEN=128), with zero RVV vector instructions. Each 32-bit word requires 11 scalar instructions for byte load and endianness conversion, forming a severe performance bottleneck. test_evp duration: 210s, IPC: 1.881 (compute-bound).",
+    "evidence": [
+      "perf annotate: sha256_block_data_order_riscv64 (3388 samples) shows zero v* vector instructions; all lbu/lw/sw/addw/sllw/srlw/or/xor/and scalar instructions",
+      "perf stat: IPC=1.881, L1_dcache_load_miss_rate=0.231%, confirming compute-bound (not memory-bound)",
+      "perf stat: duration_s=210.14, test_evp massive hotspot cost",
+      "SG2044 hardware explicitly supports RVV 1.0 (VLEN=128) but SHA-256 code does not use vector instructions",
+      "OpenSSL 3.x has existing RVV acceleration paths: sha256-riscv64-zvkb-zvknha_or_zvknhb.S in crypto/sha/asm/"
+    ]
+  },
+  "rootCause": {
+    "summary": "OpenSSL fips.so was built without the 'v' extension (compiled as rv64gc scalar-only), leaving SG2044's RVV 1.0 vector hardware completely unused. The linux64-riscv64 target in Configurations/10-main.conf does not set -march=rv64gcv.",
+    "candidateFiles": [
+      "Configurations/10-main.conf"
+    ],
+    "performanceFactors": [
+      "IPC=1.881 (scalar typical, confirms no vector width utilization)",
+      "L1_dcache_load_miss_rate=0.231% (eliminates memory-bound hypothesis)",
+      "11 scalar instructions per 32-bit word for byte load + endianness conversion",
+      "At VLEN=128 with m1, single vle32.v could load 4 words"
+    ]
+  },
+  "constraints": {
+    "riskLevel": "low",
+    "mustPreserve": [
+      "Backward compatibility: systems without 'v' extension must continue to work via runtime scalar fallback",
+      "FIPS module integrity: fips.so must pass FIPS self-tests after rebuild",
+      "Existing public API: no changes to OpenSSL API surface",
+      "Cross-compilation: change must not break non-RISC-V targets",
+      "Runtime dispatch: crypto/riscvcap.c riscv_hwprobe() must correctly select vector vs scalar paths"
+    ]
+  },
+  "validation": {
+    "requiredTests": [
+      "test_evp",
+      "openssl_speed_sha256",
+      "readelf_check_fips_arch",
+      "perf_annotate_sha256_riscv64"
+    ]
+  }
+}

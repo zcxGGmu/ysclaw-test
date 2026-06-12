@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "diag-20260611-153337",
+  "source": {"agent":"agent3","createdAt":"2025-06-11T15:33:37Z","software":"openssl","testcaseIds":["test_slh_dsa"]},
+  "problem": {
+    "summary": "SHA-256 sha256_block_data_order_riscv64 on SG2044 runs scalar (IPC=2.047, L1 miss=0.074%). Sigma/Maj rotations use sllw+srlw+or (3 instr) instead of single roriw (zbb). Already has v extension but missing zba_zbb bit-manipulation.",
+    "evidence": ["IPC=2.047 compute-bound, 3-wide OoO unsaturated","L1 miss=0.074% rules out memory-bound","perf annotate: Sigma/Maj use sllw/srlw/or triplets, no roriw","zbb roriw would reduce rotation from 3 to 1 instruction"]
+  },
+  "rootCause": {
+    "summary": "-march lacks zba_zbb extensions. SHA-256 Sigma/Maj rotations suboptimal (3-instr vs 1-instr roriw).",
+    "candidateFiles": ["Configurations/10-main.conf"],
+    "performanceFactors": ["IPC=2.047 (could reach >2.5 with zbb)","3-instruction rotation overhead per Sigma/Maj","zbb universally available on C920v2 (RVA22 mandatory)"]
+  },
+  "constraints": {"riskLevel":"low","mustPreserve":["Prior v/zvkned extensions","Runtime dispatch fallback","Cross-compilation compatibility"]},
+  "validation": {"requiredTests":["test_slh_dsa","test_evp","openssl_speed_sha256","perf_annotate_sha256_riscv64"]}
+}

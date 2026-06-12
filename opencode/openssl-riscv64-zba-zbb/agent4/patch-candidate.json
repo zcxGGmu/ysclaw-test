@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ysclaw.patch_candidate.v1",
+  "patchCandidateId": "pc-diag-20260611-153337",
+  "patchPlanId": "pp-diag-20260611-153337",
+  "createdAt": "2026-06-12T06:05:11.601Z",
+  "changedFiles": [
+    "Configurations/10-main.conf"
+  ],
+  "gitDiff": "diff --git a/Configurations/10-main.conf b/Configurations/10-main.conf\nindex 1b765a0..9a56106 100644\n--- a/Configurations/10-main.conf\n+++ b/Configurations/10-main.conf\n@@ -818,8 +818,8 @@ my %targets = (\n     # specifications,\n     \"linux64-riscv64\" => {\n         inherit_from     => [ \"linux-generic64\"],\n-        cflags           => add(\"-march=rv64gcv_zvkned\"),\n-        cxxflags         => add(\"-march=rv64gcv_zvkned\"),\n+        cflags           => add(\"-march=rv64gcv_zba_zbb_zvkned\"),\n+        cxxflags         => add(\"-march=rv64gcv_zba_zbb_zvkned\"),\n         perlasm_scheme   => \"linux64\",\n         asm_arch         => 'riscv64',\n     },\n",
+  "buildModeInvocation": "OpenCode 构建模式",
+  "notes": []
+}

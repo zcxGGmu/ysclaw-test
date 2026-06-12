@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-diag-20260611-153337",
+  "blueprintId": "diag-20260611-153337",
+  "createdAt": "2026-06-12T06:04:52.404Z",
+  "objective": "-march lacks zba_zbb extensions. SHA-256 Sigma/Maj rotations suboptimal (3-instr vs 1-instr roriw).",
+  "changes": [
+    {
+      "filePath": "Configurations/10-main.conf",
+      "action": "modify",
+      "rationale": "-march lacks zba_zbb extensions. SHA-256 Sigma/Maj rotations suboptimal (3-instr vs 1-instr roriw).",
+      "instructions": [
+        "编辑前先检查文件。",
+        "做出最小的、保持行为不变的性能修复，以解决 RootCauseBlueprint 指出的根因。",
+        "避免无关重构和格式噪音。"
+      ],
+      "risk": "low"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case test_slh_dsa",
+      "agent1 patch_regression --case test_evp",
+      "agent1 patch_regression --case openssl_speed_sha256",
+      "agent1 patch_regression --case perf_annotate_sha256_riscv64"
+    ],
+    "requiredTests": [
+      "test_slh_dsa",
+      "test_evp",
+      "openssl_speed_sha256",
+      "perf_annotate_sha256_riscv64"
+    ]
+  },
+  "expectedDiffSummary": "候选补丁应通过聚焦修改 Configurations/10-main.conf 来解决 blueprint diag-20260611-153337。"
+}

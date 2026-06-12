@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-diag-20260610-002",
+  "blueprintId": "diag-20260610-002",
+  "createdAt": "2026-06-12T02:14:57.274Z",
+  "objective": "Build configuration lacks zvkned crypto extension flag. AES_encrypt T-table implementation runs pure scalar. OpenSSL's existing vector crypto AES assembly (aes-riscv64-zvkned.pl) is never selected because the compiler and runtime dispatch cannot detect zvkned capability.",
+  "changes": [
+    {
+      "filePath": "Configurations/10-main.conf",
+      "action": "modify",
+      "rationale": "Build configuration lacks zvkned crypto extension flag. AES_encrypt T-table implementation runs pure scalar. OpenSSL's existing vector crypto AES assembly (aes-riscv64-zvkned.pl) is never selected because the compiler and runtime dispatch cannot detect zvkned capability.",
+      "instructions": [
+        "编辑前先检查文件。",
+        "做出最小的、保持行为不变的性能修复，以解决 RootCauseBlueprint 指出的根因。",
+        "避免无关重构和格式噪音。"
+      ],
+      "risk": "medium"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case test_bio_enc",
+      "agent1 patch_regression --case openssl_speed_aes128cbc",
+      "agent1 patch_regression --case readelf_check_libcrypto_arch",
+      "agent1 patch_regression --case perf_annotate_AES_encrypt"
+    ],
+    "requiredTests": [
+      "test_bio_enc",
+      "openssl_speed_aes128cbc",
+      "readelf_check_libcrypto_arch",
+      "perf_annotate_AES_encrypt"
+    ]
+  },
+  "expectedDiffSummary": "候选补丁应通过聚焦修改 Configurations/10-main.conf 来解决 blueprint diag-20260610-002。"
+}

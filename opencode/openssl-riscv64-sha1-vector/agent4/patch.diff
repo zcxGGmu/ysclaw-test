@@ -1,0 +1,2373 @@
+diff --git a/.clang-format b/.clang-format
+deleted file mode 100644
+index df41044..0000000
+--- a/.clang-format
++++ /dev/null
+@@ -1,1432 +0,0 @@
+----
+-BasedOnStyle: WebKit
+-###################################
+-#
+-# OpenSSL Customizations start here.
+-#
+-# Customizing whitespace config should be avoided, but WebKit C style
+-# does specify this for C. (with C++ being the other way around) Due
+-# to limitations in clang-format it's not possible for it to default
+-# to C today, it defaults to C++. Therefore we force this to the
+-# WebKit C style value. If we ever have C++ code we will have to
+-# consider how to deal with this.
+-PointerAlignment: Right
+-#
+-# we add matches for /** and /*- at the top
+-# of a comment block to protect comments as
+-# per STYLE.md
+-CommentPragmas:  '(^ IWYU pragma:|^\*$|^-$)'
+-# OpenSSL uses typedefs extensively. Tell clang-format about them.
+-TypeNames:
+-  - "ACCESS_DESCRIPTION"
+-  - "ADDED_OBJ"
+-  - "ADMISSIONS"
+-  - "ADMISSION_SYNTAX"
+-  - "AES_KEY"
+-  - "APP_HTTP_TLS_INFO"
+-  - "ARGS"
+-  - "ARIA_c128"
+-  - "ARIA_KEY"
+-  - "ARIA_u128"
+-  - "ASIdentifierChoice"
+-  - "ASIdentifiers"
+-  - "ASIdOrRange"
+-  - "ASIdOrRanges"
+-  - "ASN1_ADB"
+-  - "ASN1_ADB_TABLE"
+-  - "ASN1_AUX"
+-  - "ASN1_aux_cb"
+-  - "ASN1_aux_const_cb"
+-  - "ASN1_BIT_STRING"
+-  - "ASN1_BMPSTRING"
+-  - "ASN1_BOOLEAN"
+-  - "ASN1_ENCODING"
+-  - "ASN1_ENUMERATED"
+-  - "ASN1_ex_d2i"
+-  - "ASN1_ex_d2i_ex"
+-  - "ASN1_ex_free_func"
+-  - "ASN1_ex_i2d"
+-  - "ASN1_ex_new_ex_func"
+-  - "ASN1_ex_new_func"
+-  - "ASN1_ex_print_func"
+-  - "ASN1_EXTERN_FUNCS"
+-  - "ASN1_GENERALIZEDTIME"
+-  - "ASN1_GENERALSTRING"
+-  - "ASN1_IA5STRING"
+-  - "ASN1_INTEGER"
+-  - "ASN1_ITEM"
+-  - "ASN1_ITEM_EXP"
+-  - "ASN1_NULL"
+-  - "ASN1_OBJECT"
+-  - "ASN1_OCTET_STRING"
+-  - "ASN1_PCTX"
+-  - "ASN1_primitive_c2i"
+-  - "ASN1_PRIMITIVE_FUNCS"
+-  - "ASN1_primitive_i2c"
+-  - "ASN1_primitive_print"
+-  - "ASN1_PRINTABLESTRING"
+-  - "ASN1_PRINT_ARG"
+-  - "asn1_ps_func"
+-  - "ASN1_SCTX"
+-  - "ASN1_SEQUENCE_ANY"
+-  - "ASN1_STREAM_ARG"
+-  - "ASN1_STRING"
+-  - "ASN1_STRING_TABLE"
+-  - "ASN1_T61STRING"
+-  - "ASN1_TEMPLATE"
+-  - "ASN1_TIME"
+-  - "ASN1_TLC"
+-  - "ASN1_TYPE"
+-  - "ASN1_UNIVERSALSTRING"
+-  - "ASN1_UTCTIME"
+-  - "ASN1_UTF8STRING"
+-  - "ASN1_VALUE"
+-  - "ASN1_VISIBLESTRING"
+-  - "ASRange"
+-  - "ASYNC_callback_fn"
+-  - "async_ctx"
+-  - "async_fibre"
+-  - "ASYNC_JOB"
+-  - "async_pool"
+-  - "ASYNC_stack_alloc_fn"
+-  - "ASYNC_stack_free_fn"
+-  - "ASYNC_WAIT_CTX"
+-  - "AUTHORITY_INFO_ACCESS"
+-  - "AUTHORITY_KEYID"
+-  - "BASIC_CONSTRAINTS"
+-  - "BF_KEY"
+-  - "BF_LONG"
+-  - "BIGNUM"
+-  - "BIO"
+-  - "BIO_ADDR"
+-  - "BIO_ADDRINFO"
+-  - "BIO_callback_fn"
+-  - "BIO_callback_fn_ex"
+-  - "BIO_dgram_sctp_notification_handler_fn"
+-  - "BIO_F_BUFFER_CTX"
+-  - "bio_info_cb"
+-  - "BIO_info_cb"
+-  - "BIO_METHOD"
+-  - "BIO_MMSG_CB_ARGS"
+-  - "BIO_MSG"
+-  - "BIO_POLL_DESCRIPTOR"
+-  - "BIT_STRING_BITNAME"
+-  - "BLAKE2B_CTX"
+-  - "BLAKE2B_PARAM"
+-  - "BLAKE2S_CTX"
+-  - "BLAKE2S_PARAM"
+-  - "block128_f"
+-  - "BN_BLINDING"
+-  - "BN_CTX"
+-  - "BN_GENCB"
+-  - "BN_MONT_CTX"
+-  - "BN_RECP_CTX"
+-  - "BN_ULLONG"
+-  - "BN_ULONG"
+-  - "BUF_MEM"
+-  - "BY_DIR_ENTRY"
+-  - "BY_DIR_HASH"
+-  - "c448_bool_t"
+-  - "c448_dsword_t"
+-  - "c448_dword_t"
+-  - "c448_error_t"
+-  - "c448_sword_t"
+-  - "c448_word_t"
+-  - "CA_DB"
+-  - "CAMELLIA_KEY"
+-  - "CAST_KEY"
+-  - "CAST_LONG"
+-  - "cbc128_f"
+-  - "CCM128_CONTEXT"
+-  - "ccm128_f"
+-  - "CERT"
+-  - "CERTIFICATEPOLICIES"
+-  - "CERT_PKEY"
+-  - "cfq_free_cb"
+-  - "CIPH_DIGEST"
+-  - "CLIENTHELLO_MSG"
+-  - "CMAC_CTX"
+-  - "CMS_AuthenticatedData"
+-  - "CMS_AuthEnvelopedData"
+-  - "CMS_CertificateChoices"
+-  - "CMS_CompressedData"
+-  - "CMS_ContentInfo"
+-  - "CMS_CTX"
+-  - "CMS_DigestedData"
+-  - "CMS_EncapsulatedContentInfo"
+-  - "CMS_EncryptedContentInfo"
+-  - "CMS_EncryptedData"
+-  - "CMS_EnvelopedData"
+-  - "CMS_IssuerAndSerialNumber"
+-  - "CMS_KEKIdentifier"
+-  - "CMS_KEKRecipientInfo"
+-  - "CMS_KEMRecipientInfo"
+-  - "CMS_KeyAgreeRecipientIdentifier"
+-  - "CMS_KeyAgreeRecipientInfo"
+-  - "CMS_KeyTransRecipientInfo"
+-  - "CMS_OriginatorIdentifierOrKey"
+-  - "CMS_OriginatorInfo"
+-  - "CMS_OriginatorPublicKey"
+-  - "CMS_OtherCertificateFormat"
+-  - "CMS_OtherKeyAttribute"
+-  - "CMS_OtherRecipientInfo"
+-  - "CMS_OtherRevocationInfoFormat"
+-  - "CMS_PasswordRecipientInfo"
+-  - "CMS_Receipt"
+-  - "CMS_ReceiptRequest"
+-  - "CMS_ReceiptsFrom"
+-  - "CMS_RecipientEncryptedKey"
+-  - "CMS_RecipientIdentifier"
+-  - "CMS_RecipientInfo"
+-  - "CMS_RecipientKeyIdentifier"
+-  - "CMS_RevocationInfoChoice"
+-  - "CMS_SignedData"
+-  - "CMS_SignerIdentifier"
+-  - "CMS_SignerInfo"
+-  - "COMP_CTX"
+-  - "COMP_METHOD"
+-  - "CONF"
+-  - "conf_finish_func"
+-  - "CONF_IMODULE"
+-  - "conf_init_func"
+-  - "CONF_METHOD"
+-  - "CONF_MODULE"
+-  - "confunc_f"
+-  - "CON_FUNC_RETURN"
+-  - "CONF_VALUE"
+-  - "const_ASN1_VALUE"
+-  - "const_DES_cblock"
+-  - "CRL_DIST_POINTS"
+-  - "CRYPTO_CONDVAR"
+-  - "CRYPTO_dynlock"
+-  - "CRYPTO_EX_DATA"
+-  - "CRYPTO_EX_dup"
+-  - "CRYPTO_EX_free"
+-  - "CRYPTO_EX_new"
+-  - "CRYPTO_free_fn"
+-  - "CRYPTO_malloc_fn"
+-  - "CRYPTO_MUTEX"
+-  - "CRYPTO_ONCE"
+-  - "CRYPTO_RCU_LOCK"
+-  - "CRYPTO_realloc_fn"
+-  - "CRYPTO_REF_COUNT"
+-  - "CRYPTO_RWLOCK"
+-  - "CRYPTO_THREAD"
+-  - "CRYPTO_THREAD_ID"
+-  - "CRYPTO_THREADID"
+-  - "CRYPTO_THREAD_LOCAL"
+-  - "CRYPTO_THREAD_LOCAL_KEY_ID"
+-  - "CRYPTO_THREAD_RETVAL"
+-  - "CRYPTO_THREAD_ROUTINE"
+-  - "CRYPTO_THREAD_ROUTINE_CB"
+-  - "CTLOG"
+-  - "ct_log_entry_type_t"
+-  - "CTLOG_STORE"
+-  - "CT_POLICY_EVAL_CTX"
+-  - "ctr128_f"
+-  - "curve448_point_t"
+-  - "curve448_precomputed_s"
+-  - "curve448_scalar_t"
+-  - "custom_ext_add_cb"
+-  - "custom_ext_free_cb"
+-  - "custom_ext_method"
+-  - "custom_ext_methods"
+-  - "custom_ext_parse_cb"
+-  - "d2i_of_void"
+-  - "danetls_record"
+-  - "DB_ATTR"
+-  - "DES_cblock"
+-  - "DES_key_schedule"
+-  - "DES_LONG"
+-  - "DH"
+-  - "DH_METHOD"
+-  - "DH_NAMED_GROUP"
+-  - "DISPLAY_COLUMNS"
+-  - "DIST_POINT"
+-  - "DIST_POINT_NAME"
+-  - "do_server_cb"
+-  - "DOWNGRADE"
+-  - "DRBG_STATUS"
+-  - "DSA"
+-  - "DSA_METHOD"
+-  - "DSA_SIG"
+-  - "DSO"
+-  - "DSO_FUNC_TYPE"
+-  - "DSO_MERGER_FUNC"
+-  - "DSO_METHOD"
+-  - "DSO_NAME_CONVERTER_FUNC"
+-  - "dsword_t"
+-  - "DTLS1_STATE"
+-  - "DTLS_BITMAP"
+-  - "DTLS_RECORD_LAYER"
+-  - "DTLS_RLAYER_RECORD_DATA"
+-  - "DTLS_timer_cb"
+-  - "dword_t"
+-  - "dynamic_bind_engine"
+-  - "dynamic_fns"
+-  - "dynamic_MEM_fns"
+-  - "dynamic_v_check_fn"
+-  - "dyn_MEM_free_fn"
+-  - "dyn_MEM_malloc_fn"
+-  - "dyn_MEM_realloc_fn"
+-  - "ecb128_f"
+-  - "EC_builtin_curve"
+-  - "ECDH_VINFO"
+-  - "ECDSA_SIG"
+-  - "EC_GROUP"
+-  - "EC_KEY"
+-  - "EC_KEY_METHOD"
+-  - "EC_METHOD"
+-  - "ECPARAMETERS"
+-  - "ECPKPARAMETERS"
+-  - "EC_POINT"
+-  - "EC_PRE_COMP"
+-  - "ECX_KEY"
+-  - "ecx_key_op_t"
+-  - "ECX_KEY_TYPE"
+-  - "EDIPARTYNAME"
+-  - "ENDPOINT"
+-  - "ENGINE"
+-  - "ENGINE_CIPHERS_PTR"
+-  - "ENGINE_CMD_DEFN"
+-  - "ENGINE_CTRL_FUNC_PTR"
+-  - "ENGINE_DIGESTS_PTR"
+-  - "ENGINE_GEN_FUNC_PTR"
+-  - "ENGINE_GEN_INT_FUNC_PTR"
+-  - "ENGINE_LOAD_KEY_PTR"
+-  - "ENGINE_PKEY_ASN1_METHS_PTR"
+-  - "ENGINE_PKEY_METHS_PTR"
+-  - "ENGINE_SSL_CLIENT_CERT_PTR"
+-  - "ENUMERATED_NAMES"
+-  - "ERR_STATE"
+-  - "ERR_STRING_DATA"
+-  - "ESS_CERT_ID"
+-  - "ESS_CERT_ID_V2"
+-  - "ESS_ISSUER_SERIAL"
+-  - "ESS_SIGNING_CERT"
+-  - "ESS_SIGNING_CERT_V2"
+-  - "EVP_ASYM_CIPHER"
+-  - "EVP_CIPHER"
+-  - "evp_cipher_aead_asn1_params"
+-  - "EVP_CIPHER_CTX"
+-  - "EVP_CIPHER_INFO"
+-  - "EVP_CTRL_TLS1_1_MULTIBLOCK_PARAM"
+-  - "EVP_ENCODE_CTX"
+-  - "EVP_KDF"
+-  - "EVP_KDF_CTX"
+-  - "EVP_KEM"
+-  - "EVP_KEYEXCH"
+-  - "EVP_KEYMGMT"
+-  - "EVP_MAC"
+-  - "EVP_MAC_CTX"
+-  - "EVP_MD"
+-  - "EVP_MD_CTX"
+-  - "EVP_PBE_CTL"
+-  - "EVP_PBE_KEYGEN"
+-  - "EVP_PBE_KEYGEN_EX"
+-  - "EVP_PKEY"
+-  - "EVP_PKEY_ASN1_METHOD"
+-  - "EVP_PKEY_CTX"
+-  - "EVP_PKEY_gen_cb"
+-  - "EVP_PKEY_METHOD"
+-  - "EVP_RAND"
+-  - "EVP_RAND_CTX"
+-  - "EVP_SIGNATURE"
+-  - "EVP_SKEY"
+-  - "EVP_SKEYMGMT"
+-  - "EX_CALLBACK"
+-  - "EX_CALLBACKS"
+-  - "EXTENDED_KEY_USAGE"
+-  - "EXT_RETURN"
+-  - "FFC_OSSL_PARAMS"
+-  - "FFC_PARAMS"
+-  - "FIPS_DEFERRED_TEST"
+-  - "FUNCTION"
+-  - "FUNC_TYPE"
+-  - "GCM128_CONTEXT"
+-  - "gcm_ghash_fn"
+-  - "gcm_gmult_fn"
+-  - "gcm_init_fn"
+-  - "GENERAL_NAME"
+-  - "GENERAL_NAMES"
+-  - "GENERAL_SUBTREE"
+-  - "GEN_SESSION_CB"
+-  - "gf"
+-  - "gf_s"
+-  - "HMAC_CTX"
+-  - "hm_fragment"
+-  - "hsword_t"
+-  - "HT"
+-  - "HT_CONFIG"
+-  - "HT_KEY"
+-  - "HT_VALUE"
+-  - "HT_VALUE_LIST"
+-  - "i2d_of_void"
+-  - "i64"
+-  - "IDEA_INT"
+-  - "IDEA_KEY_SCHEDULE"
+-  - "INFOPAIR"
+-  - "int128_t"
+-  - "int16_t"
+-  - "int32_t"
+-  - "int64_t"
+-  - "int8_t"
+-  - "int_dhx942_dh"
+-  - "IPAddrBlocks"
+-  - "IPAddressChoice"
+-  - "IPAddressFamily"
+-  - "IPAddressOrRange"
+-  - "IPAddressOrRanges"
+-  - "IPAddressRange"
+-  - "ISSUER_SIGN_TOOL"
+-  - "ISSUING_DIST_POINT"
+-  - "KDF_DATA"
+-  - "KECCAK1600_CTX"
+-  - "KEY_TABLE_TYPE"
+-  - "ktls_crypto_info_t"
+-  - "LM_OTS_PARAMS"
+-  - "LM_OTS_SIG"
+-  - "LMS_KEY"
+-  - "LMS_PARAMS"
+-  - "LMS_PUB_KEY"
+-  - "LMS_SIG"
+-  - "locale_t"
+-  - "MAC_KEY"
+-  - "mask_t"
+-  - "MATRIX"
+-  - "MD2_CTX"
+-  - "MD2_INT"
+-  - "MD4_CTX"
+-  - "MD4_LONG"
+-  - "MD5_CTX"
+-  - "MD5_LONG"
+-  - "MD5_SHA1_CTX"
+-  - "MDC2_CTX"
+-  - "MEM"
+-  - "MIME_HEADER"
+-  - "MIME_PARAM"
+-  - "ML_COMMON_CODEC"
+-  - "ML_COMMON_PKCS8_FMT"
+-  - "ML_COMMON_PKCS8_FMT_PREF"
+-  - "ML_COMMON_SPKI_FMT"
+-  - "ML_DSA_KEY"
+-  - "ML_DSA_PARAMS"
+-  - "ML_DSA_SIG"
+-  - "ML_KEM_KEY"
+-  - "ML_KEM_VINFO"
+-  - "MLX_KEY"
+-  - "MSG_FLOW_STATE"
+-  - "MSG_PROCESS_RETURN"
+-  - "NAME_CONSTRAINTS"
+-  - "NAME_FUNCS"
+-  - "NAMING_AUTHORITY"
+-  - "NETSCAPE_CERT_SEQUENCE"
+-  - "NETSCAPE_SPKAC"
+-  - "NETSCAPE_SPKI"
+-  - "nid_triple"
+-  - "niels_s"
+-  - "niels_t"
+-  - "NISTP224_PRE_COMP"
+-  - "NISTP256_PRE_COMP"
+-  - "NISTP384_PRE_COMP"
+-  - "NISTP521_PRE_COMP"
+-  - "NISTZ256_PRE_COMP"
+-  - "NOTICEREF"
+-  - "OBJ_NAME"
+-  - "OCB128_CONTEXT"
+-  - "ocb128_f"
+-  - "OCB_BLOCK"
+-  - "OCSP_BASICRESP"
+-  - "OCSP_CERTID"
+-  - "OCSP_CERTSTATUS"
+-  - "OCSP_CRLID"
+-  - "OCSP_ONEREQ"
+-  - "OCSP_REQ_CTX"
+-  - "OCSP_REQINFO"
+-  - "OCSP_REQUEST"
+-  - "OCSP_RESPBYTES"
+-  - "OCSP_RESPDATA"
+-  - "OCSP_RESPID"
+-  - "OCSP_RESPONSE"
+-  - "OCSP_REVOKEDINFO"
+-  - "OCSP_SERVICELOC"
+-  - "OCSP_SIGNATURE"
+-  - "OCSP_SINGLERESP"
+-  - "OP_CACHE_ELEM"
+-  - "OPENSSL_BLOCK"
+-  - "OPENSSL_CORE_CTX"
+-  - "OPENSSL_CSTRING"
+-  - "OPENSSL_DIR_CTX"
+-  - "OPENSSL_INIT_SETTINGS"
+-  - "OPENSSL_LHASH"
+-  - "OPENSSL_LH_COMPFUNC"
+-  - "OPENSSL_LH_COMPFUNCTHUNK"
+-  - "OPENSSL_LH_DOALL_FUNC"
+-  - "OPENSSL_LH_DOALL_FUNCARG"
+-  - "OPENSSL_LH_DOALL_FUNCARG_THUNK"
+-  - "OPENSSL_LH_DOALL_FUNC_THUNK"
+-  - "OPENSSL_LH_HASHFUNC"
+-  - "OPENSSL_LH_HASHFUNCTHUNK"
+-  - "OPENSSL_LH_NODE"
+-  - "OPENSSL_PSTRING"
+-  - "OPENSSL_SA"
+-  - "OPENSSL_sk_compfunc"
+-  - "OPENSSL_sk_copyfunc"
+-  - "OPENSSL_sk_freefunc"
+-  - "OPENSSL_sk_freefunc_thunk"
+-  - "OPENSSL_STACK"
+-  - "OPENSSL_STRING"
+-  - "OPTIONS"
+-  - "OPT_PAIR"
+-  - "OSSL_AA_DIST_POINT"
+-  - "OSSL_ACKM"
+-  - "OSSL_ACKM_PROBE_INFO"
+-  - "OSSL_ACKM_RX_PKT"
+-  - "OSSL_ACKM_TX_PKT"
+-  - "OSSL_ALGORITHM"
+-  - "OSSL_ALGORITHM_CAPABLE"
+-  - "OSSL_ALLOWED_ATTRIBUTES_CHOICE"
+-  - "OSSL_ALLOWED_ATTRIBUTES_ITEM"
+-  - "OSSL_ALLOWED_ATTRIBUTES_SYNTAX"
+-  - "OSSL_ATAV"
+-  - "OSSL_ATTRIBUTE_DESCRIPTOR"
+-  - "OSSL_ATTRIBUTE_MAPPING"
+-  - "OSSL_ATTRIBUTE_MAPPINGS"
+-  - "OSSL_ATTRIBUTES_SYNTAX"
+-  - "OSSL_ATTRIBUTE_TYPE_MAPPING"
+-  - "OSSL_ATTRIBUTE_VALUE_MAPPING"
+-  - "OSSL_AUTHORITY_ATTRIBUTE_ID_SYNTAX"
+-  - "OSSL_BASIC_ATTR_CONSTRAINTS"
+-  - "OSSL_CALLBACK"
+-  - "OSSL_CC_ACK_INFO"
+-  - "OSSL_CC_DATA"
+-  - "OSSL_CC_ECN_INFO"
+-  - "OSSL_CC_LOSS_INFO"
+-  - "OSSL_CC_METHOD"
+-  - "ossl_cmp_allow_unprotected_cb_t"
+-  - "OSSL_CMP_ATAV"
+-  - "OSSL_CMP_ATAVS"
+-  - "OSSL_CMP_CAKEYUPDANNCONTENT"
+-  - "OSSL_CMP_certConf_cb_t"
+-  - "OSSL_CMP_CERTCONFIRMCONTENT"
+-  - "OSSL_CMP_CERTIFIEDKEYPAIR"
+-  - "OSSL_CMP_CERTORENCCERT"
+-  - "OSSL_CMP_CERTREPMESSAGE"
+-  - "OSSL_CMP_CERTREQTEMPLATE"
+-  - "OSSL_CMP_CERTRESPONSE"
+-  - "OSSL_CMP_CERTSTATUS"
+-  - "OSSL_CMP_CHALLENGE"
+-  - "OSSL_CMP_CRLANNCONTENT"
+-  - "OSSL_CMP_CRLSOURCE"
+-  - "OSSL_CMP_CRLSTATUS"
+-  - "OSSL_CMP_CTX"
+-  - "OSSL_CMP_ERRORMSGCONTENT"
+-  - "OSSL_CMP_GENMSGCONTENT"
+-  - "OSSL_CMP_GENREPCONTENT"
+-  - "OSSL_CMP_ITAV"
+-  - "OSSL_CMP_KEYRECREPCONTENT"
+-  - "OSSL_CMP_log_cb_t"
+-  - "OSSL_CMP_MSG"
+-  - "OSSL_CMP_MSGS"
+-  - "OSSL_CMP_PKIBODY"
+-  - "OSSL_CMP_PKIFAILUREINFO"
+-  - "OSSL_CMP_PKIFREETEXT"
+-  - "OSSL_CMP_PKIHEADER"
+-  - "OSSL_CMP_PKISI"
+-  - "OSSL_CMP_PKISTATUS"
+-  - "OSSL_CMP_POLLREP"
+-  - "OSSL_CMP_POLLREPCONTENT"
+-  - "OSSL_CMP_POLLREQ"
+-  - "OSSL_CMP_POLLREQCONTENT"
+-  - "OSSL_CMP_POPODECKEYCHALLCONTENT"
+-  - "OSSL_CMP_POPODECKEYRESPCONTENT"
+-  - "OSSL_CMP_PROTECTEDPART"
+-  - "OSSL_CMP_REVANNCONTENT"
+-  - "OSSL_CMP_REVDETAILS"
+-  - "OSSL_CMP_REVREPCONTENT"
+-  - "OSSL_CMP_REVREQCONTENT"
+-  - "OSSL_CMP_ROOTCAKEYUPDATE"
+-  - "OSSL_CMP_severity"
+-  - "OSSL_CMP_SRV_certConf_cb_t"
+-  - "OSSL_CMP_SRV_cert_request_cb_t"
+-  - "OSSL_CMP_SRV_clean_transaction_cb_t"
+-  - "OSSL_CMP_SRV_CTX"
+-  - "OSSL_CMP_SRV_delayed_delivery_cb_t"
+-  - "OSSL_CMP_SRV_error_cb_t"
+-  - "OSSL_CMP_SRV_genm_cb_t"
+-  - "OSSL_CMP_SRV_pollReq_cb_t"
+-  - "OSSL_CMP_SRV_rr_cb_t"
+-  - "OSSL_CMP_transfer_cb_t"
+-  - "OSSL_COMP_CERT"
+-  - "OSSL_CORE_BIO"
+-  - "OSSL_CORE_HANDLE"
+-  - "OSSL_CRMF_ATTRIBUTETYPEANDVALUE"
+-  - "OSSL_CRMF_CERTID"
+-  - "OSSL_CRMF_CERTREQUEST"
+-  - "OSSL_CRMF_CERTTEMPLATE"
+-  - "OSSL_CRMF_ENCKEYWITHID"
+-  - "OSSL_CRMF_ENCKEYWITHID_IDENTIFIER"
+-  - "OSSL_CRMF_ENCRYPTEDKEY"
+-  - "OSSL_CRMF_ENCRYPTEDVALUE"
+-  - "OSSL_CRMF_MSG"
+-  - "OSSL_CRMF_MSGS"
+-  - "OSSL_CRMF_OPTIONALVALIDITY"
+-  - "OSSL_CRMF_PBMPARAMETER"
+-  - "OSSL_CRMF_PKIPUBLICATIONINFO"
+-  - "OSSL_CRMF_PKMACVALUE"
+-  - "OSSL_CRMF_POPO"
+-  - "OSSL_CRMF_POPOPRIVKEY"
+-  - "OSSL_CRMF_POPOSIGNINGKEY"
+-  - "OSSL_CRMF_POPOSIGNINGKEYINPUT"
+-  - "OSSL_CRMF_POPOSIGNINGKEYINPUT_AUTHINFO"
+-  - "OSSL_CRMF_PRIVATEKEYINFO"
+-  - "OSSL_CRMF_PUBINFOS"
+-  - "OSSL_CRMF_SINGLEPUBINFO"
+-  - "OSSL_DAY_TIME"
+-  - "OSSL_DAY_TIME_BAND"
+-  - "OSSL_DECODER"
+-  - "OSSL_DECODER_CLEANUP"
+-  - "OSSL_DECODER_CONSTRUCT"
+-  - "OSSL_DECODER_CTX"
+-  - "OSSL_DECODER_INSTANCE"
+-  - "OSSL_DISPATCH"
+-  - "OSSL_ENCODER"
+-  - "OSSL_ENCODER_CLEANUP"
+-  - "OSSL_ENCODER_CONSTRUCT"
+-  - "OSSL_ENCODER_CTX"
+-  - "OSSL_ENCODER_INSTANCE"
+-  - "OSSL_EX_DATA_GLOBAL"
+-  - "ossl_finish_mutate_cb"
+-  - "OSSL_FIPS_IND"
+-  - "OSSL_FIPS_IND_CHECK_CB"
+-  - "OSSL_FUNC"
+-  - "OSSL_HANDSHAKE_STATE"
+-  - "OSSL_HASH"
+-  - "OSSL_HPKE_AEAD_INFO"
+-  - "OSSL_HPKE_CTX"
+-  - "OSSL_HPKE_KDF_INFO"
+-  - "OSSL_HPKE_KEM_INFO"
+-  - "OSSL_HPKE_SUITE"
+-  - "OSSL_HTTP_bio_cb_t"
+-  - "OSSL_HTTP_REQ_CTX"
+-  - "OSSL_i2d_of_void_ctx"
+-  - "OSSL_IETF_ATTR_SYNTAX"
+-  - "OSSL_IETF_ATTR_SYNTAX_VALUE"
+-  - "OSSL_INDICATOR_CALLBACK"
+-  - "OSSL_INFO_SYNTAX"
+-  - "OSSL_INFO_SYNTAX_POINTER"
+-  - "OSSL_INOUT_CALLBACK"
+-  - "ossl_intmax_t"
+-  - "OSSL_ISSUER_SERIAL"
+-  - "OSSL_ITEM"
+-  - "OSSL_JSON_ENC"
+-  - "OSSL_LIB_CTX"
+-  - "OSSL_LIB_CTX_THREADS"
+-  - "OSSL_METHOD_CONSTRUCT_METHOD"
+-  - "OSSL_METHOD_STORE"
+-  - "ossl_msg_cb"
+-  - "ossl_mutate_packet_cb"
+-  - "OSSL_NAMED_DAY"
+-  - "OSSL_NAMEMAP"
+-  - "OSSL_OBJECT_DIGEST_INFO"
+-  - "OSSL_PARAM"
+-  - "OSSL_PARAM_ALIGNED_BLOCK"
+-  - "OSSL_PARAM_BLD"
+-  - "OSSL_PASSPHRASE_CALLBACK"
+-  - "OSSL_PQUEUE"
+-  - "OSSL_PRIVILEGE_POLICY_ID"
+-  - "OSSL_PROPERTY_DEFINITION"
+-  - "OSSL_PROPERTY_IDX"
+-  - "OSSL_PROPERTY_LIST"
+-  - "OSSL_PROPERTY_OPER"
+-  - "OSSL_PROPERTY_TYPE"
+-  - "OSSL_PROVIDER"
+-  - "OSSL_PROVIDER_INFO"
+-  - "OSSL_provider_init_fn"
+-  - "OSSL_QRL_ENC_LEVEL"
+-  - "OSSL_QRL_ENC_LEVEL_SET"
+-  - "OSSL_QRX"
+-  - "OSSL_QRX_ARGS"
+-  - "ossl_qrx_key_update_cb"
+-  - "ossl_qrx_late_validation_cb"
+-  - "OSSL_QRX_PKT"
+-  - "OSSL_QTX"
+-  - "OSSL_QTX_ARGS"
+-  - "OSSL_QTX_IOVEC"
+-  - "OSSL_QTX_PKT"
+-  - "OSSL_QUIC_ACK_RANGE"
+-  - "ossl_quic_demux_cb_fn"
+-  - "OSSL_QUIC_FRAME_ACK"
+-  - "OSSL_QUIC_FRAME_CONN_CLOSE"
+-  - "OSSL_QUIC_FRAME_CRYPTO"
+-  - "OSSL_QUIC_FRAME_NEW_CONN_ID"
+-  - "OSSL_QUIC_FRAME_RESET_STREAM"
+-  - "OSSL_QUIC_FRAME_STOP_SENDING"
+-  - "OSSL_QUIC_FRAME_STREAM"
+-  - "ossl_quic_initial_token_free_fn"
+-  - "OSSL_QUIC_TLS_CALLBACKS"
+-  - "OSSL_QUIC_TX_PACKETISER"
+-  - "OSSL_QUIC_TX_PACKETISER_ARGS"
+-  - "OSSL_RECORD_LAYER"
+-  - "OSSL_RECORD_METHOD"
+-  - "OSSL_RECORD_TEMPLATE"
+-  - "OSSL_ROLE_SPEC_CERT_ID"
+-  - "OSSL_ROLE_SPEC_CERT_ID_SYNTAX"
+-  - "OSSL_RTT_INFO"
+-  - "OSSL_SELF_TEST"
+-  - "OSSL_SLH_ADRS_FUNC_copy"
+-  - "OSSL_SLH_ADRS_FUNC_copy_keypair_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_chain_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_hash_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_keypair_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_layer_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_tree_address"
+-  - "OSSL_SLH_ADRS_FUNC_set_tree_height"
+-  - "OSSL_SLH_ADRS_FUNC_set_tree_index"
+-  - "OSSL_SLH_ADRS_FUNC_set_type_and_clear"
+-  - "OSSL_SLH_ADRS_FUNC_zero"
+-  - "OSSL_SLH_HASHFUNC_F"
+-  - "OSSL_SLH_HASHFUNC_H"
+-  - "OSSL_SLH_HASHFUNC_H_MSG"
+-  - "OSSL_SLH_HASHFUNC_PRF"
+-  - "OSSL_SLH_HASHFUNC_PRF_MSG"
+-  - "OSSL_SLH_HASHFUNC_T"
+-  - "ossl_ssize_t"
+-  - "OSSL_STATEM"
+-  - "ossl_statem_finish_mutate_handshake_cb"
+-  - "ossl_statem_mutate_handshake_cb"
+-  - "OSSL_STATM"
+-  - "OSSL_STORE_attach_fn"
+-  - "OSSL_STORE_close_fn"
+-  - "OSSL_STORE_ctrl_fn"
+-  - "OSSL_STORE_CTX"
+-  - "OSSL_STORE_eof_fn"
+-  - "OSSL_STORE_error_fn"
+-  - "OSSL_STORE_expect_fn"
+-  - "OSSL_STORE_find_fn"
+-  - "OSSL_STORE_INFO"
+-  - "OSSL_STORE_LOADER"
+-  - "OSSL_STORE_LOADER_CTX"
+-  - "OSSL_STORE_load_fn"
+-  - "OSSL_STORE_open_ex_fn"
+-  - "OSSL_STORE_open_fn"
+-  - "OSSL_STORE_post_process_info_fn"
+-  - "OSSL_STORE_SEARCH"
+-  - "OSSL_TARGET"
+-  - "OSSL_TARGET_CERT"
+-  - "OSSL_TARGETING_INFORMATION"
+-  - "OSSL_TARGETS"
+-  - "OSSL_thread_stop_handler_fn"
+-  - "OSSL_TIME"
+-  - "OSSL_TIME_PERIOD"
+-  - "OSSL_TIME_SPEC"
+-  - "OSSL_TIME_SPEC_ABSOLUTE"
+-  - "OSSL_TIME_SPEC_DAY"
+-  - "OSSL_TIME_SPEC_MONTH"
+-  - "OSSL_TIME_SPEC_TIME"
+-  - "OSSL_TIME_SPEC_WEEKS"
+-  - "OSSL_TIME_SPEC_X_DAY_OF"
+-  - "OSSL_trace_cb"
+-  - "ossl_uintmax_t"
+-  - "OSSL_USER_NOTICE_SYNTAX"
+-  - "OTHERNAME"
+-  - "PACKET"
+-  - "PBE2PARAM"
+-  - "PBEPARAM"
+-  - "PBKDF2PARAM"
+-  - "PBMAC1PARAM"
+-  - "pem_password_cb"
+-  - "pitem"
+-  - "piterator"
+-  - "PKCS12"
+-  - "PKCS12_BAGS"
+-  - "PKCS12_create_cb"
+-  - "PKCS12_MAC_DATA"
+-  - "PKCS12_SAFEBAG"
+-  - "PKCS7"
+-  - "PKCS7_CTX"
+-  - "PKCS7_DIGEST"
+-  - "PKCS7_ENC_CONTENT"
+-  - "PKCS7_ENCRYPT"
+-  - "PKCS7_ENVELOPE"
+-  - "PKCS7_ISSUER_AND_SERIAL"
+-  - "PKCS7_RECIP_INFO"
+-  - "PKCS7_SIGNED"
+-  - "PKCS7_SIGN_ENVELOPE"
+-  - "PKCS7_SIGNER_INFO"
+-  - "PKCS8_PRIV_KEY_INFO"
+-  - "PKEY_USAGE_PERIOD"
+-  - "pniels_t"
+-  - "point_conversion_form_t"
+-  - "POLICY_CONSTRAINTS"
+-  - "POLICYINFO"
+-  - "POLICY_MAPPING"
+-  - "POLICY_MAPPINGS"
+-  - "POLICYQUALINFO"
+-  - "POLY"
+-  - "POLY1305"
+-  - "poly1305_blocks_f"
+-  - "poly1305_emit_f"
+-  - "pqueue"
+-  - "prime_t"
+-  - "PROFESSION_INFO"
+-  - "PROFESSION_INFOS"
+-  - "PROV_AES_CCM_CTX"
+-  - "PROV_AES_CTX"
+-  - "PROV_AES_GCM_CTX"
+-  - "PROV_AES_GCM_SIV_CTX"
+-  - "PROV_AES_HMAC_SHA1_CTX"
+-  - "PROV_AES_HMAC_SHA1_ETM_CTX"
+-  - "PROV_AES_HMAC_SHA256_CTX"
+-  - "PROV_AES_HMAC_SHA256_ETM_CTX"
+-  - "PROV_AES_HMAC_SHA512_ETM_CTX"
+-  - "PROV_AES_HMAC_SHA_CTX"
+-  - "PROV_AES_HMAC_SHA_ETM_CTX"
+-  - "PROV_AES_OCB_CTX"
+-  - "PROV_AES_SIV_CTX"
+-  - "PROV_AES_XTS_CTX"
+-  - "PROV_ARIA_CCM_CTX"
+-  - "PROV_ARIA_CTX"
+-  - "PROV_ARIA_GCM_CTX"
+-  - "PROV_BLOWFISH_CTX"
+-  - "PROV_CAMELLIA_CTX"
+-  - "PROV_CAST_CTX"
+-  - "PROV_CCM_CTX"
+-  - "PROV_CCM_HW"
+-  - "PROV_CHACHA20_CTX"
+-  - "PROV_CHACHA20_POLY1305_CTX"
+-  - "PROV_CIPHER"
+-  - "PROV_CIPHER_CTX"
+-  - "PROV_CIPHER_HW"
+-  - "PROV_CIPHER_HW_AES_GCM_SIV"
+-  - "PROV_CIPHER_HW_AES_HMAC_SHA"
+-  - "PROV_CIPHER_HW_AES_HMAC_SHA_ETM"
+-  - "PROV_CIPHER_HW_AES_SIV"
+-  - "PROV_CIPHER_HW_CHACHA20"
+-  - "PROV_CIPHER_HW_CHACHA20_POLY1305"
+-  - "PROV_CIPHER_HW_FN"
+-  - "PROV_CIPHER_HW_RC4_HMAC_MD5"
+-  - "PROV_CTX"
+-  - "PROV_DES_CTX"
+-  - "PROV_DIGEST"
+-  - "PROV_DRBG"
+-  - "PROV_DRBG_HMAC"
+-  - "PROV_GCM_CTX"
+-  - "PROV_GCM_HW"
+-  - "PROV_IDEA_CTX"
+-  - "PROV_RC2_CTX"
+-  - "PROV_RC4_CTX"
+-  - "PROV_RC4_HMAC_MD5_CTX"
+-  - "PROV_RC5_CTX"
+-  - "PROV_SEED_CTX"
+-  - "PROV_SHA3_METHOD"
+-  - "PROV_SKEY"
+-  - "PROV_SM4_CCM_CTX"
+-  - "PROV_SM4_CTX"
+-  - "PROV_SM4_GCM_CTX"
+-  - "PROV_SM4_XTS_CTX"
+-  - "PROV_TDES_CTX"
+-  - "PROXY_CERT_INFO_EXTENSION"
+-  - "PROXY_POLICY"
+-  - "PW_CB_DATA"
+-  - "QLOG"
+-  - "QLOG_TRACE_INFO"
+-  - "QUIC_CFQ"
+-  - "QUIC_CFQ_ITEM"
+-  - "QUIC_CHANNEL"
+-  - "QUIC_CHANNEL_ARGS"
+-  - "QUIC_CONNECTION"
+-  - "QUIC_CONN_ID"
+-  - "QUIC_DEMUX"
+-  - "QUIC_DOMAIN"
+-  - "QUIC_ENGINE"
+-  - "QUIC_ENGINE_ARGS"
+-  - "QUIC_FIFD"
+-  - "QUIC_HDR_PROTECTOR"
+-  - "QUIC_LCIDM"
+-  - "QUIC_LISTENER"
+-  - "QUIC_OBJ"
+-  - "QUIC_PKT_HDR"
+-  - "QUIC_PKT_HDR_PTRS"
+-  - "QUIC_PN"
+-  - "QUIC_PORT"
+-  - "QUIC_PORT_ARGS"
+-  - "QUIC_PREFERRED_ADDR"
+-  - "QUIC_RCIDM"
+-  - "QUIC_REACTOR"
+-  - "QUIC_REACTOR_WAIT_CTX"
+-  - "QUIC_REACTOR_WAIT_SLOT"
+-  - "QUIC_RSTREAM"
+-  - "QUIC_RXFC"
+-  - "QUIC_SRT_ELEM"
+-  - "QUIC_SRT_GEN"
+-  - "QUIC_SRTM"
+-  - "QUIC_SSTREAM"
+-  - "QUIC_STATELESS_RESET_TOKEN"
+-  - "QUIC_STREAM"
+-  - "QUIC_STREAM_ITER"
+-  - "QUIC_STREAM_LIST_NODE"
+-  - "QUIC_STREAM_MAP"
+-  - "QUIC_TERMINATE_CAUSE"
+-  - "QUIC_THREAD_ASSIST"
+-  - "QUIC_TICK_RESULT"
+-  - "QUIC_TLS"
+-  - "QUIC_TLS_ARGS"
+-  - "QUIC_TOKEN"
+-  - "QUIC_TSERVER"
+-  - "QUIC_TSERVER_ARGS"
+-  - "QUIC_TXFC"
+-  - "QUIC_TXPIM"
+-  - "QUIC_TXPIM_CHUNK"
+-  - "QUIC_TXPIM_PKT"
+-  - "QUIC_TXP_STATUS"
+-  - "QUIC_URXE"
+-  - "QUIC_URXE_LIST"
+-  - "QUIC_XSO"
+-  - "RAND_METHOD"
+-  - "RAND_POOL"
+-  - "RAW_EXTENSION"
+-  - "RC2_INT"
+-  - "RC2_KEY"
+-  - "RC4_KEY"
+-  - "RC5_32_INT"
+-  - "RC5_32_KEY"
+-  - "rcu_cb_fn"
+-  - "READ_STATE"
+-  - "RECORD_LAYER"
+-  - "RIO_NOTIFIER"
+-  - "RIO_POLL_BUILDER"
+-  - "RIPEMD160_CTX"
+-  - "RIPEMD160_LONG"
+-  - "RSA"
+-  - "RSA_ACVP_TEST"
+-  - "RSA_METHOD"
+-  - "RSA_OAEP_PARAMS"
+-  - "RSA_PRIME_INFO"
+-  - "RSA_PSS_PARAMS"
+-  - "RSA_PSS_PARAMS_30"
+-  - "S390X_KMAC_PARAMS"
+-  - "S390X_KMA_PARAMS"
+-  - "S390X_KM_XTS_PARAMS"
+-  - "SCRYPT_PARAMS"
+-  - "SCT"
+-  - "SCT_CTX"
+-  - "sct_source_t"
+-  - "sct_validation_status_t"
+-  - "sct_version_t"
+-  - "SEED_KEY_SCHEDULE"
+-  - "seed_word"
+-  - "SELF_TEST_POST_PARAMS"
+-  - "SFRAME_LIST"
+-  - "sframe_list_write_at_cb"
+-  - "SHA256_CTX"
+-  - "sha3_absorb_fn"
+-  - "sha3_final_fn"
+-  - "sha3_squeeze_fn"
+-  - "SHA512_CTX"
+-  - "SHA_CTX"
+-  - "SHA_LONG"
+-  - "SHA_LONG64"
+-  - "SIGALG_LOOKUP"
+-  - "SIPHASH"
+-  - "SIV128_CONTEXT"
+-  - "SIV_BLOCK"
+-  - "SLH_ADRS_FUNC"
+-  - "SLH_DSA_HASH_CTX"
+-  - "SLH_DSA_KEY"
+-  - "SLH_DSA_PARAMS"
+-  - "SLH_HASH_FUNC"
+-  - "SM3_CTX"
+-  - "SM3_WORD"
+-  - "SM4_KEY"
+-  - "socklen_t"
+-  - "SRP_ARG"
+-  - "SRP_CTX"
+-  - "SRP_gN"
+-  - "SRP_gN_cache"
+-  - "srpsrvparm"
+-  - "SRP_user_pwd"
+-  - "SRP_VBASE"
+-  - "SRTP_PROTECTION_PROFILE"
+-  - "SSL"
+-  - "SSL3_ENC_METHOD"
+-  - "SSL_allow_early_data_cb_fn"
+-  - "SSL_async_callback_fn"
+-  - "SSL_CERT_LOOKUP"
+-  - "SSL_CIPHER"
+-  - "SSL_client_hello_cb_fn"
+-  - "SSL_COMP"
+-  - "SSL_CONF_CMD"
+-  - "SSL_CONF_CTX"
+-  - "SSL_CONN_CLOSE_INFO"
+-  - "SSL_CONNECTION"
+-  - "ssl_crock_st"
+-  - "ssl_ct_validation_cb"
+-  - "SSL_CTX"
+-  - "SSL_CTX_alpn_select_cb_func"
+-  - "SSL_CTX_decrypt_session_ticket_fn"
+-  - "SSL_CTX_EXT_SECURE"
+-  - "SSL_CTX_generate_session_ticket_fn"
+-  - "SSL_CTX_keylog_cb_func"
+-  - "SSL_CTX_npn_advertised_cb_func"
+-  - "SSL_CTX_npn_select_cb_func"
+-  - "SSL_custom_ext_add_cb_ex"
+-  - "SSL_custom_ext_free_cb_ex"
+-  - "SSL_custom_ext_parse_cb_ex"
+-  - "SSL_DANE"
+-  - "SSL_EARLY_DATA_STATE"
+-  - "SSL_EXCERT"
+-  - "SSL_HMAC"
+-  - "SSL_MAC_BUF"
+-  - "SSL_METHOD"
+-  - "SSL_new_pending_conn_cb_fn"
+-  - "SSL_PHA_STATE"
+-  - "SSL_POLL_ITEM"
+-  - "SSL_psk_client_cb_func"
+-  - "SSL_psk_find_session_cb_func"
+-  - "SSL_psk_server_cb_func"
+-  - "SSL_psk_use_session_cb_func"
+-  - "SSL_SESSION"
+-  - "SSL_SHUTDOWN_EX_ARGS"
+-  - "SSL_STREAM_RESET_ARGS"
+-  - "SSL_TICKET_RETURN"
+-  - "SSL_TICKET_STATUS"
+-  - "SSL_TOKEN_STORE"
+-  - "SSL_verify_cb"
+-  - "STACK_OF"
+-  - "STACK_OF_X509_NAME_ENTRY"
+-  - "STREAM_FRAME"
+-  - "STRINT_PAIR"
+-  - "sword_t"
+-  - "SXNET"
+-  - "SXNETID"
+-  - "testdsa"
+-  - "TLS_BUFFER"
+-  - "TLSEXT_INDEX"
+-  - "TLS_FEATURE"
+-  - "TLS_GROUP_INFO"
+-  - "TLS_RECORD"
+-  - "TLS_RL_RECORD"
+-  - "tls_session_secret_cb_fn"
+-  - "TLS_SESSION_TICKET_EXT"
+-  - "tls_session_ticket_ext_cb_fn"
+-  - "TLS_SIGALG_INFO"
+-  - "TLS_SIGALGS"
+-  - "TS_ACCURACY"
+-  - "TS_extension_cb"
+-  - "TS_MSG_IMPRINT"
+-  - "TS_REQ"
+-  - "TS_RESP"
+-  - "TS_RESP_CTX"
+-  - "TS_serial_cb"
+-  - "TS_STATUS_INFO"
+-  - "TS_time_cb"
+-  - "TS_TST_INFO"
+-  - "TS_VERIFY_CTX"
+-  - "TTY_STRUCT"
+-  - "TXT_DB"
+-  - "u128"
+-  - "u16"
+-  - "u32"
+-  - "u64"
+-  - "u8"
+-  - "UI"
+-  - "UI_METHOD"
+-  - "uint128_t"
+-  - "uint16_t"
+-  - "uint32_t"
+-  - "uint64_t"
+-  - "uint8_t"
+-  - "uintptr_t"
+-  - "UINT_RANGE"
+-  - "UINT_SET"
+-  - "UINT_SET_ITEM"
+-  - "UI_STRING"
+-  - "UNICODE_CONSTANTS"
+-  - "USERNOTICE"
+-  - "VECTOR"
+-  - "VERIFY_CB_ARGS"
+-  - "WHIRLPOOL_CTX"
+-  - "word_t"
+-  - "WORK_STATE"
+-  - "WPACKET"
+-  - "WPACKET_SUB"
+-  - "WRITE_STATE"
+-  - "WRITE_TRAN"
+-  - "X509"
+-  - "X509_ACERT"
+-  - "X509_ACERT_INFO"
+-  - "X509_ACERT_ISSUER"
+-  - "X509_ACERT_ISSUER_V2FORM"
+-  - "X509_ALGOR"
+-  - "X509_ALGORS"
+-  - "X509_ATTRIBUTE"
+-  - "X509_CERT_AUX"
+-  - "X509_CINF"
+-  - "X509_CRL"
+-  - "X509_CRL_INFO"
+-  - "X509_CRL_METHOD"
+-  - "X509_EXTENSION"
+-  - "X509_EXTENSIONS"
+-  - "X509_HOLDER"
+-  - "X509_INFO"
+-  - "X509_LOOKUP"
+-  - "X509_LOOKUP_ctrl_ex_fn"
+-  - "X509_LOOKUP_ctrl_fn"
+-  - "X509_LOOKUP_get_by_alias_fn"
+-  - "X509_LOOKUP_get_by_fingerprint_fn"
+-  - "X509_LOOKUP_get_by_issuer_serial_fn"
+-  - "X509_LOOKUP_get_by_subject_ex_fn"
+-  - "X509_LOOKUP_get_by_subject_fn"
+-  - "X509_LOOKUP_METHOD"
+-  - "X509_LOOKUP_TYPE"
+-  - "X509_NAME"
+-  - "X509_NAME_ENTRY"
+-  - "X509_OBJECT"
+-  - "X509_PKEY"
+-  - "X509_POLICY_CACHE"
+-  - "X509_POLICY_DATA"
+-  - "X509_POLICY_LEVEL"
+-  - "X509_POLICY_NODE"
+-  - "X509_POLICY_TREE"
+-  - "X509_PUBKEY"
+-  - "X509_PURPOSE"
+-  - "X509_REQ"
+-  - "X509_REQ_INFO"
+-  - "X509_REVOKED"
+-  - "X509_SIG"
+-  - "X509_SIG_INFO"
+-  - "X509_STORE"
+-  - "X509_STORE_CTX"
+-  - "X509_STORE_CTX_cert_crl_fn"
+-  - "X509_STORE_CTX_check_crl_fn"
+-  - "X509_STORE_CTX_check_issued_fn"
+-  - "X509_STORE_CTX_check_policy_fn"
+-  - "X509_STORE_CTX_check_revocation_fn"
+-  - "X509_STORE_CTX_cleanup_fn"
+-  - "X509_STORE_CTX_get_crl_fn"
+-  - "X509_STORE_CTX_get_issuer_fn"
+-  - "X509_STORE_CTX_verify_cb"
+-  - "X509_STORE_CTX_verify_fn"
+-  - "X509_TRUST"
+-  - "X509V3_CONF_METHOD"
+-  - "X509V3_CTX"
+-  - "X509V3_EXT_D2I"
+-  - "X509V3_EXT_FREE"
+-  - "X509V3_EXT_I2D"
+-  - "X509V3_EXT_I2R"
+-  - "X509V3_EXT_I2S"
+-  - "X509V3_EXT_METHOD"
+-  - "X509V3_EXT_NEW"
+-  - "X509V3_EXT_R2I"
+-  - "X509V3_EXT_S2I"
+-  - "X509V3_EXT_V2I"
+-  - "X509_VAL"
+-  - "X509_VERIFY_PARAM"
+-  - "XTS128_CONTEXT"
+-  # The following types are macros, and need to remain that way, unfortunately
+-  - "HASH_CTX"
+-  - "HASH_LONG"
+-  - "MD32_REG_T"
+-# OpenSSL uses macros extensively. Tell clang-format about them.
+-TypenameMacros: ['LHASH_OF', 'STACK_OF']
+-StatementMacros:
+-  - "BLOCK_CIPHER_aead"
+-  - "BLOCK_CIPHER_generic"
+-  - "BLOCK_CIPHER_custom"
+-  - "BLOCK_CIPHER_def_cbc"
+-  - "BLOCK_CIPHER_def_cfb"
+-  - "BLOCK_CIPHER_def_ofb"
+-  - "BLOCK_CIPHER_def_ecb"
+-  - "BLOCK_CIPHER_defs"
+-  - "BLOCK_CIPHER_generic_pack"
+-  - "DECLARE_AES_EVP"
+-  - "DECLARE_ASN1_ALLOC_FUNCTIONS"
+-  - "DECLARE_ASN1_ALLOC_FUNCTIONS_attr"
+-  - "DECLARE_ASN1_ALLOC_FUNCTIONS_name"
+-  - "DECLARE_ASN1_ALLOC_FUNCTIONS_name_attr"
+-  - "DECLARE_ASN1_DUP_FUNCTION"
+-  - "DECLARE_ASN1_DUP_FUNCTION_attr"
+-  - "DECLARE_ASN1_DUP_FUNCTION_name"
+-  - "DECLARE_ASN1_DUP_FUNCTION_name_attr"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_attr"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_const"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_name"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_name_attr"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_only"
+-  - "DECLARE_ASN1_ENCODE_FUNCTIONS_only_attr"
+-  - "DECLARE_ASN1_FUNCTIONS"
+-  - "DECLARE_ASN1_FUNCTIONS_attr"
+-  - "DECLARE_ASN1_FUNCTIONS_const"
+-  - "DECLARE_ASN1_FUNCTIONS_fname"
+-  - "DECLARE_ASN1_FUNCTIONS_name"
+-  - "DECLARE_ASN1_FUNCTIONS_name_attr"
+-  - "DECLARE_ASN1_ITEM"
+-  - "DECLARE_ASN1_ITEM_attr"
+-  - "DECLARE_ASN1_NDEF_FUNCTION"
+-  - "DECLARE_ASN1_NDEF_FUNCTION_attr"
+-  - "DECLARE_ASN1_PRINT_FUNCTION"
+-  - "DECLARE_ASN1_PRINT_FUNCTION_attr"
+-  - "DECLARE_ASN1_PRINT_FUNCTION_fname"
+-  - "DECLARE_ASN1_PRINT_FUNCTION_fname_attr"
+-  - "DECLARE_COMPARISON"
+-  - "DECLARE_COMPARISONS"
+-  - "DECLARE_DISPATCH"
+-  - "DECLARE_HT_VALUE_TYPE_FNS"
+-  - "DECLARE_LHASH_COMP_FN"
+-  - "DECLARE_LHASH_DOALL_ARG_FN"
+-  - "DECLARE_LHASH_HASH_FN"
+-  - "DECLARE_LIST_OF"
+-  - "DECLARE_ML_KEM_PRVKEYDATA"
+-  - "DECLARE_ML_KEM_PUBKEYDATA"
+-  - "DECLARE_ML_KEM_VARIANT_KEYDATA"
+-  - "DECLARE_OBJ_BSEARCH_CMP_FN"
+-  - "DECLARE_OBJ_BSEARCH_GLOBAL_CMP_FN"
+-  - "DECLARE_PEM_read"
+-  - "DECLARE_PEM_read_attr"
+-  - "DECLARE_PEM_read_bio"
+-  - "DECLARE_PEM_read_bio_attr"
+-  - "DECLARE_PEM_read_bio_ex"
+-  - "DECLARE_PEM_read_bio_ex_attr"
+-  - "DECLARE_PEM_read_ex"
+-  - "DECLARE_PEM_read_ex_attr"
+-  - "DECLARE_PEM_read_fp"
+-  - "DECLARE_PEM_read_fp_attr"
+-  - "DECLARE_PEM_read_fp_ex_attr"
+-  - "DECLARE_PEM_rw"
+-  - "DECLARE_PEM_rw_attr"
+-  - "DECLARE_PEM_rw_cb"
+-  - "DECLARE_PEM_rw_cb_attr"
+-  - "DECLARE_PEM_rw_cb_ex"
+-  - "DECLARE_PEM_rw_cb_ex_attr"
+-  - "DECLARE_PEM_rw_const"
+-  - "DECLARE_PEM_rw_const_attr"
+-  - "DECLARE_PEM_rw_ex"
+-  - "DECLARE_PEM_rw_ex_attr"
+-  - "DECLARE_PEM_write"
+-  - "DECLARE_PEM_write_attr"
+-  - "DECLARE_PEM_write_bio"
+-  - "DECLARE_PEM_write_bio_attr"
+-  - "DECLARE_PEM_write_bio_const"
+-  - "DECLARE_PEM_write_bio_const_attr"
+-  - "DECLARE_PEM_write_bio_ex"
+-  - "DECLARE_PEM_write_bio_ex_attr"
+-  - "DECLARE_PEM_write_cb"
+-  - "DECLARE_PEM_write_cb_attr"
+-  - "DECLARE_PEM_write_cb_bio"
+-  - "DECLARE_PEM_write_cb_bio_attr"
+-  - "DECLARE_PEM_write_cb_bio_ex_attr"
+-  - "DECLARE_PEM_write_cb_ex"
+-  - "DECLARE_PEM_write_cb_ex_attr"
+-  - "DECLARE_PEM_write_cb_ex_bio"
+-  - "DECLARE_PEM_write_cb_fp"
+-  - "DECLARE_PEM_write_cb_fp_attr"
+-  - "DECLARE_PEM_write_cb_fp_ex_attr"
+-  - "DECLARE_PEM_write_const"
+-  - "DECLARE_PEM_write_const_attr"
+-  - "DECLARE_PEM_write_ex"
+-  - "DECLARE_PEM_write_ex_attr"
+-  - "DECLARE_PEM_write_fp"
+-  - "DECLARE_PEM_write_fp_attr"
+-  - "DECLARE_PEM_write_fp_const"
+-  - "DECLARE_PEM_write_fp_const_attr"
+-  - "DECLARE_PEM_write_fp_ex_attr"
+-  - "DECLARE_RUN_ONCE"
+-  - "DECLARE_VARIANT"
+-  - "IMPLEMENT_aead_cipher"
+-  - "IMPLEMENT_aead_cipher_pipeline"
+-  - "IMPLEMENT_ARIA_CFBR"
+-  - "IMPLEMENT_ASN1_ALLOC_FUNCTIONS"
+-  - "IMPLEMENT_ASN1_ALLOC_FUNCTIONS_fname"
+-  - "IMPLEMENT_ASN1_ALLOC_FUNCTIONS_pfname"
+-  - "IMPLEMENT_ASN1_DUP_FUNCTION"
+-  - "IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname"
+-  - "IMPLEMENT_ASN1_ENCODE_FUNCTIONS_fname"
+-  - "IMPLEMENT_ASN1_FUNCTIONS"
+-  - "IMPLEMENT_ASN1_FUNCTIONS_const"
+-  - "IMPLEMENT_ASN1_FUNCTIONS_ENCODE_name"
+-  - "IMPLEMENT_ASN1_FUNCTIONS_fname"
+-  - "IMPLEMENT_ASN1_FUNCTIONS_name"
+-  - "IMPLEMENT_ASN1_MSTRING"
+-  - "IMPLEMENT_ASN1_NDEF_FUNCTION"
+-  - "IMPLEMENT_ASN1_PRINT_FUNCTION"
+-  - "IMPLEMENT_ASN1_PRINT_FUNCTION_fname"
+-  - "IMPLEMENT_ASN1_STRING_FUNCTIONS"
+-  - "IMPLEMENT_ASN1_TYPE"
+-  - "IMPLEMENT_ASN1_TYPE_ex"
+-  - "IMPLEMENT_BLAKE_functions"
+-  - "IMPLEMENT_BLOCK_CIPHER"
+-  - "IMPLEMENT_CFBR"
+-  - "IMPLEMENT_cipher"
+-  - "IMPLEMENT_CIPHER"
+-  - "IMPLEMENT_CIPHER_HW_CBC"
+-  - "IMPLEMENT_CIPHER_HW_CFB"
+-  - "IMPLEMENT_CIPHER_HW_COPYCTX"
+-  - "IMPLEMENT_CIPHER_HW_ECB"
+-  - "IMPLEMENT_CIPHER_HW_OFB"
+-  - "IMPLEMENT_CRMF_CTRL_FUNC"
+-  - "IMPLEMENT_cts_cipher"
+-  - "IMPLEMENT_des_cipher"
+-  - "IMPLEMENT_DIGEST"
+-  - "IMPLEMENT_digest_functions"
+-  - "IMPLEMENT_digest_functions_with_settable_ctx"
+-  - "IMPLEMENT_digest_functions_with_serialize"
+-  - "IMPLEMENT_dtls1_meth_func"
+-  - "IMPLEMENT_DYNAMIC_BIND_FN"
+-  - "IMPLEMENT_DYNAMIC_CHECK_FN"
+-  - "IMPLEMENT_ECX_VARIANT"
+-  - "IMPLEMENT_EXTERN_ASN1"
+-  - "IMPLEMENT_generic_cipher"
+-  - "IMPLEMENT_generic_cipher_func"
+-  - "IMPLEMENT_generic_cipher_genfn"
+-  - "IMPLEMENT_HT_VALUE_TYPE_FNS"
+-  - "IMPLEMENT_KECCAK_functions"
+-  - "IMPLEMENT_KMAC_functions"
+-  - "IMPLEMENT_KMAC_TABLE"
+-  - "IMPLEMENT_LEGACY_ERR_LOAD"
+-  - "IMPLEMENT_LEGACY_EVP_MD_METH"
+-  - "IMPLEMENT_LEGACY_EVP_MD_METH_LC"
+-  - "IMPLEMENT_LEGACY_EVP_MD_METH_SHA3"
+-  - "IMPLEMENT_LEGACY_EVP_MD_METH_SHAKE"
+-  - "IMPLEMENT_LHASH_COMP_FN"
+-  - "IMPLEMENT_LHASH_DOALL_ARG"
+-  - "IMPLEMENT_LHASH_DOALL_ARG_CONST"
+-  - "IMPLEMENT_LHASH_DOALL_ARG_FN"
+-  - "IMPLEMENT_LHASH_HASH_FN"
+-  - "IMPLEMENT_MS"
+-  - "IMPLEMENT_MSBLOB"
+-  - "IMPLEMENT_OBJ_BSEARCH_CMP_FN"
+-  - "IMPLEMENT_OBJ_BSEARCH_GLOBAL_CMP_FN"
+-  - "IMPLEMENT_PEM_provided_rw"
+-  - "IMPLEMENT_PEM_provided_rw_cb"
+-  - "IMPLEMENT_PEM_provided_write"
+-  - "IMPLEMENT_PEM_provided_write_bio"
+-  - "IMPLEMENT_PEM_provided_write_body_fallback"
+-  - "IMPLEMENT_PEM_provided_write_body_fallback_cb"
+-  - "IMPLEMENT_PEM_provided_write_body_main"
+-  - "IMPLEMENT_PEM_provided_write_body_pass"
+-  - "IMPLEMENT_PEM_provided_write_body_vars"
+-  - "IMPLEMENT_PEM_provided_write_cb"
+-  - "IMPLEMENT_PEM_provided_write_cb_bio"
+-  - "IMPLEMENT_PEM_provided_write_cb_fp"
+-  - "IMPLEMENT_PEM_provided_write_cb_to"
+-  - "IMPLEMENT_PEM_provided_write_fp"
+-  - "IMPLEMENT_PEM_provided_write_to"
+-  - "IMPLEMENT_PEM_read"
+-  - "IMPLEMENT_PEM_read_bio"
+-  - "IMPLEMENT_PEM_read_fp"
+-  - "IMPLEMENT_PEM_rw"
+-  - "IMPLEMENT_PEM_rw_cb"
+-  - "IMPLEMENT_PEM_rw_const"
+-  - "IMPLEMENT_PEM_write"
+-  - "IMPLEMENT_PEM_write_bio"
+-  - "IMPLEMENT_PEM_write_bio_const"
+-  - "IMPLEMENT_PEM_write_cb"
+-  - "IMPLEMENT_PEM_write_cb_bio"
+-  - "IMPLEMENT_PEM_write_cb_bio_const"
+-  - "IMPLEMENT_PEM_write_cb_const"
+-  - "IMPLEMENT_PEM_write_cb_fp"
+-  - "IMPLEMENT_PEM_write_cb_fp_const"
+-  - "IMPLEMENT_PEM_write_const"
+-  - "IMPLEMENT_PEM_write_fp"
+-  - "IMPLEMENT_PEM_write_fp_const"
+-  - "IMPLEMENT_quic_meth_func"
+-  - "IMPLEMENT_SHA3_functions"
+-  - "IMPLEMENT_SHAKE_functions"
+-  - "IMPLEMENT_SSL_TEST_BOOL_OPTION"
+-  - "IMPLEMENT_SSL_TEST_INT_OPTION"
+-  - "IMPLEMENT_SSL_TEST_STRING_OPTION"
+-  - "IMPLEMENT_ssl3_meth_func"
+-  - "IMPLEMENT_STATIC_ASN1_ALLOC_FUNCTIONS"
+-  - "IMPLEMENT_STATIC_ASN1_ENCODE_FUNCTIONS"
+-  - "IMPLEMENT_tdes_cipher"
+-  - "IMPLEMENT_TEST_SUITE"
+-  - "IMPLEMENT_TEST_SUITE_LEGACY"
+-  - "IMPLEMENT_TEST_SUITE_MSBLOB"
+-  - "IMPLEMENT_TEST_SUITE_PARAMS"
+-  - "IMPLEMENT_TEST_SUITE_PROTECTED_PVK"
+-  - "IMPLEMENT_TEST_SUITE_UNPROTECTED_PVK"
+-  - "IMPLEMENT_tls_meth_func"
+-  - "IMPLEMENT_var_keylen_cipher"
+-  - "IMPLEMENT_var_keylen_cipher_func"
+-  - "IMPLEMENT_WRAP_CIPHER"
+-  - "ASN1_ADB_END"
+-  - "ASN1_CHOICE_END"
+-  - "ASN1_CHOICE_END_cb"
+-  - "ASN1_CHOICE_END_name"
+-  - "ASN1_CHOICE_END_selector"
+-  - "ASN1_F_ASN1_FIND_END                             0"
+-  - "ASN1_ITEM_TEMPLATE_END"
+-  - "ASN1_NDEF_SEQUENCE_END"
+-  - "ASN1_NDEF_SEQUENCE_END_cb"
+-  - "ASN1_SEQUENCE_END"
+-  - "ASN1_SEQUENCE_END_cb"
+-  - "ASN1_SEQUENCE_END_enc"
+-  - "ASN1_SEQUENCE_END_name"
+-  - "ASN1_SEQUENCE_END_ref"
+-  - "make_dh"
+-  - "make_dh_bn"
+-  - "static_ASN1_CHOICE_END"
+-  - "static_ASN1_CHOICE_END_name"
+-  - "static_ASN1_CHOICE_END_selector"
+-  - "static_ASN1_NDEF_SEQUENCE_END"
+-  - "static_ASN1_SEQUENCE_END"
+-  - "static_ASN1_SEQUENCE_END_cb"
+-  - "static_ASN1_SEQUENCE_END_name"
+-  - "static_ASN1_SEQUENCE_END_ref"
+-  - "PROV_CIPHER_HW_aria_mode"
+-  - "PROV_CIPHER_HW_camellia_mode"
+-  - "PROV_CIPHER_HW_des_mode"
+-  - "PROV_CIPHER_HW_sm4_mode"
+-  # This isn't quite right, but it causes clang-format to do a slightly better
+-  # job formatting this macro.
+-  - "ASN1_EX_TEMPLATE_TYPE"
+-  - "LAZY"
+-#
+-# Include sorting should be disabled until post 4.0
+-#
+-#SortIncludes:
+-#  Enabled:         false
+-#  IgnoreCase:      false
+-#  IgnoreExtension: false
+-SortIncludes:    Never
+-IncludeBlocks:   Preserve
+-IncludeCategories:
+-#  # deprecated must always be first
+-#  - Regex:           '^"internal/deprecated.h"'
+-#    Priority:        -10
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  # bio_local is special
+-#  - Regex:           '^"bio_local.h"'
+-#    Priority:        -1
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  - Regex:           '^"crypto/.*\.h"'
+-#    Priority:        5
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  - Regex:           '^"internal/.*\.h"'
+-#    Priority:        4
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  - Regex:           '^<openssl/.*\.h>'
+-#    Priority:        3
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  - Regex:           '^<.*\.h>'
+-#    Priority:        1
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  # we do not currently include C++ style files, in case we ever do?
+-#  - Regex:           '^<.*'
+-#    Priority:        2
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-#  - Regex:           '.*'
+-#    Priority:        6
+-#    SortPriority:    0
+-#    CaseSensitive:   false
+-...
+-
+diff --git a/.codespellrc b/.codespellrc
+deleted file mode 100644
+index df3d676..0000000
+--- a/.codespellrc
++++ /dev/null
+@@ -1,457 +0,0 @@
+-[codespell]
+-ignore-regex = \b[a-zA-Z][a-zA-Z]\b
+-
+-uri-ignore-words-list =
+-    standarts
+-
+-ignore-words-list =
+-    aas,
+-    Aas,
+-    AAS,
+-    abd,
+-    ABD,
+-    accreting,
+-    ADDAD,
+-    addin,
+-    adin,
+-    ADn,
+-    AFAIR,
+-    afile,
+-    afterAll,
+-    AfterAll,
+-    Ake,
+-    ALine,
+-    allEdges,
+-    alloced,
+-    alloco,
+-    allws,
+-    alo,
+-    Alo,
+-    alow,
+-    ALS,
+-    alsptd,
+-    ang,
+-    ans,
+-    anS,
+-    ANS,
+-    aNULL,
+-    archType,
+-    arithmetics,
+-    assertIn,
+-    ategory,
+-    atLeast,
+-    AtLeast,
+-    atMost,
+-    biom,
+-    bion,
+-    bootup,
+-    BRE,
+-    Buda,
+-    buildd,
+-    bve,
+-    CAF,
+-    cann,
+-    CANN,
+-    cant,
+-    Chang,
+-    checkin,
+-    childs,
+-    ciph,
+-    circularly,
+-    Circularly,
+-    claus,
+-    Claus,
+-    clen,
+-    CLOS,
+-    co-ordinate,
+-    co-ordinates,
+-    Collet,
+-    Collison,
+-    compilability,
+-    compileTime,
+-    CompileTime,
+-    complies,
+-    COMPLIES,
+-    configury,
+-    consumation,
+-    couldn,
+-    couter,
+-    crasher,
+-    crashers,
+-    crate,
+-    Crate,
+-    CRATE,
+-    creat,
+-    CREAT,
+-    CrOS,
+-    crypted,
+-    CRYPTED,
+-    currentY,
+-    DAA,
+-    datas,
+-    debbugs,
+-    Debbugs,
+-    DELET,
+-    dependancies,
+-    dependancy,
+-    dependant,
+-    deque,
+-    Deque,
+-    dota,
+-    doubleclick,
+-    doubleClick,
+-    DoubleClick,
+-    dout,
+-    Dout,
+-    DOUT,
+-    dum,
+-    dur,
+-    Dur,
+-    Durin,
+-    ect,
+-    ECT,
+-    ede,
+-    EDE,
+-    endianess,
+-    endin,
+-    engineerr,
+-    ENGINEerr,
+-    equest,
+-    equests,
+-    FileTest,
+-    FILETEST,
+-    filetests,
+-    flate,
+-    Flate,
+-    FLATE,
+-    fpr,
+-    FPR,
+-    FPT,
+-    gord,
+-    gost,
+-    Gost,
+-    GOST,
+-    Hart,
+-    hashin,
+-    hasTable,
+-    hel,
+-    hist,
+-    HIST,
+-    HSI,
+-    htmp,
+-    ifset,
+-    igest,
+-    iif,
+-    IIF,
+-    implementor,
+-    Implementor,
+-    implementors,
+-    Implementors,
+-    inactivate,
+-    inbrace,
+-    indention,
+-    indx,
+-    ine,
+-    informat,
+-    inh,
+-    inout,
+-    inOut,
+-    InOut,
+-    INOUT,
+-    ISCONNECTION,
+-    isnt,
+-    ist,
+-    IST,
+-    keep-alives,
+-    keypair,
+-    keyPair,
+-    Keypair,
+-    KeyPair,
+-    KEYPAIR,
+-    keypairs,
+-    keyPairs,
+-    Keypairs,
+-    KeyPairs,
+-    keyserver,
+-    LAMDA,
+-    larg,
+-    leapYear,
+-    LOd,
+-    LOD,
+-    Maked,
+-    Manger,
+-    Manuel,
+-    ment,
+-    Merget,
+-    minimise,
+-    mis,
+-    Mis,
+-    MIS,
+-    mitre,
+-    Mitre,
+-    MITRE,
+-    mmaped,
+-    msdos,
+-    MSDOS,
+-    nam,
+-    Nam,
+-    NAM,
+-    nclusion,
+-    Ned,
+-    nin,
+-    Nin,
+-    nmake,
+-    NMake,
+-    NMAKE,
+-    NOo,
+-    notin,
+-    Notin,
+-    NotIn,
+-    numer,
+-    OCE,
+-    offsetp,
+-    ois,
+-    onText,
+-    OnText,
+-    openin,
+-    OptIn,
+-    OPTIO,
+-    origN,
+-    outin,
+-    paeth,
+-    Paeth,
+-    PAETH,
+-    parm,
+-    pARM,
+-    Parm,
+-    PARM,
+-    parms,
+-    pARMS,
+-    Parms,
+-    PARMs,
+-    PARMS,
+-    pass-thru,
+-    passin,
+-    poping,
+-    pres,
+-    Pres,
+-    prevEnd,
+-    pris,
+-    PullRequest,
+-    que,
+-    re-usable,
+-    Re-usable,
+-    re-use,
+-    Re-use,
+-    re-used,
+-    Re-used,
+-    re-uses,
+-    Re-uses,
+-    re-using,
+-    Re-using,
+-    readd,
+-    Readd,
+-    readded,
+-    Readded,
+-    regArg,
+-    regArgs,
+-    requestor,
+-    Requestor,
+-    requestors,
+-    rewinded,
+-    roperties,
+-    sav,
+-    SEH,
+-    ser,
+-    Ser,
+-    SER,
+-    servent,
+-    sHolder,
+-    shouldBe,
+-    shouldnot,
+-    SHS,
+-    siz,
+-    SIZ,
+-    SME,
+-    SOM,
+-    Sorce,
+-    sover,
+-    splitted,
+-    statics,
+-    Statics,
+-    strRange,
+-    succes,
+-    technics,
+-    testss,
+-    therefor,
+-    Therefor,
+-    therefrom,
+-    Thi,
+-    thirdparty,
+-    thirdParty,
+-    Thirdparty,
+-    ThirdParty,
+-    THIRDPARTY,
+-    thru,
+-    Thur,
+-    THUR,
+-    tmplate,
+-    tne,
+-    tolen,
+-    tthe,
+-    ture,
+-    uis,
+-    UIs,
+-    upto,
+-    upTo,
+-    uptodate,
+-    upToDate,
+-    UpToDate,
+-    useable,
+-    Useable,
+-    userA,
+-    UserA,
+-    usign,
+-    varN,
+-    vertexes,
+-    vew,
+-    vor,
+-    WAN,
+-    wasn,
+-    Widgits,
+-    Wirth,
+-    wont,
+-    WRONLY,
+-    WTH
+-
+-skip =
+-    [cC]hange.[lL]og*,
+-    [cC]hange[lL]og*,
+-    [cC]hanges,
+-    [cC]hanges[._-]*,
+-    *__*__*.html,
+-    *_8h_source.html,
+-    *_8h.html,
+-    *.asc,
+-    *.bin,
+-    *.crt,
+-    *.csr,
+-    *.css.map,
+-    *.eps,
+-    *.fr.utf-8,
+-    *.git,
+-    *.html.de,
+-    *.html.es,
+-    *.html.fr,
+-    *.html.ko.euc-kr,
+-    *.html.pt-br,
+-    *.info_[0-9],
+-    *.ipynb,
+-    *.ja.utf8,
+-    *.js.map,
+-    *.min.js,
+-    *.pdf,
+-    *.pem,
+-    *.po,
+-    *.ppm,
+-    *.ps,
+-    *.rtf,
+-    *.sum,
+-    *.svg,
+-    *.svn,
+-    *.tr.utf8,
+-    *.xpm,
+-    *.zh-cn.utf8,
+-    *.zlib,
+-    *[._-][cC]hanges,
+-    *[._-]CHANGES,
+-    */.mailmap,
+-    */.versions/*,
+-    */[eE]ncode/*,
+-    */[eE]ncodings/*,
+-    */[lL]ang/*,
+-    */[lL]anguage/*,
+-    */[lL]anguages/*,
+-    */[lL]ocale,
+-    */[mM]ath[jJ]ax/*,
+-    */[tT]hird*[pP]arty/*,
+-    */[tT]ranslation/*,
+-    */[tT]ranslations/*,
+-    */*.desktop,
+-    */*.desktop.in,
+-    */*[^a/]test/*,
+-    */*[^a/]tests/*,
+-    */*[lL]ocal[ei]*/*,
+-    */3rd*[pP]arty/*,
+-    */aspell/*,
+-    */AUTHORS*,
+-    */charsets/*,
+-    */chrtrans/*,
+-    */codepage/*,
+-    */data/*,
+-    */deps/*,
+-    */dict/*,
+-    */dictionaries/*,
+-    */doc*/[a-df-z][a-z]/*,
+-    */doc*/[a-z][a-z][_-][a-zA-Z][a-zA-Z]/*,
+-    */doc*/e[a-mo-z]/*,
+-    */extern/*,
+-    */external/*,
+-    */externals/*,
+-    */help/[a-df-z][a-z]/*,
+-    */help/[a-z][a-z]_[A-Z][A-Z]/*,
+-    */help/es/*,
+-    */i18n/*,
+-    */icu/*,
+-    */info/[a-df-z][a-z]/*,
+-    */info/[a-z][a-z]_[A-Z][A-Z]/*,
+-    */info/es/*,
+-    */intl/*,
+-    */l10n/*,
+-    */langmap/*,
+-    */langs/*,
+-    */LICENSE,
+-    */man*/[a-df-z][a-z]/*,
+-    */man*/[a-z][a-z][_-][a-zA-Z][a-zA-Z]/*,
+-    */man*/e[a-mo-z]/*,
+-    */messages[_./][a-df-z][a-z][_./]*,
+-    */messages[_./][a-z][a-z]_[A-Z][A-Z][_./]*,
+-    */messages[_./]es[_./]*,
+-    */rfc[1-9]*.txt,
+-    */runtime/*,
+-    */searchindex.js,
+-    */test*/*,
+-    */test/danetest.in,
+-    */test/data2.bin,
+-    */test/recipes/30-test_evp_data/evppkey_kas.txt,
+-    */test/recipes/30-test_evp_data/evppkey.txt,
+-    */unicode/*,
+-    */Unicode/*,
+-    */unicore/*,
+-    */vendor/*,
+-    */vendors/*,
+-    */yarn.lock,
+-    *codespell-check.sh,
+-    *lorem-ipsum*,
+-    *man[12345657]/*
+-    /fonts/*,
+-    ABOUT-NLS,
+-    authors.xml,
+-    CHANGE.log*,
+-    CHANGELOG*,
+-    CHANGES,
+-    CHANGES[._-]*,
+-    CONTRIBUTORS*,
+-    CREDITS,
+-    CREDITS.TXT,
+-    DONATIONS,
+-    external/*,
+-    jquery.js,
+-    jquery.min.map,
+-    localization*-[a-z][a-z]_[a-zA-Z][a-zA-Z].*,
+-    localization*-[a-z][a-z].*,
+-    MAINTAINERS,
+-    NormalizationTest.txt,
+-    package-lock.json,
+-    THANKS*,
+-    UnicodeData.txt
+diff --git a/.git-blame-ignore-revs b/.git-blame-ignore-revs
+deleted file mode 100644
+index be8e6f1..0000000
+--- a/.git-blame-ignore-revs
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# Run util/openssl-format-source -v -c .
+-0f113f3ee4d629ef9a4a30911b22b224772085e5
+-# 4.0-POST-CLANG-FORMAT-WEBKIT
+-2fab90bb5e1937f1c2125eab144f7f6c39e70087
+diff --git a/.gitattributes b/.gitattributes
+deleted file mode 100644
+index a292d2b..0000000
+--- a/.gitattributes
++++ /dev/null
+@@ -1,19 +0,0 @@
+-*.bin binary
+-*.der binary
+-/fuzz/corpora/** binary
+-*.pfx binary
+-test/recipes/15-test_ml_dsa_codecs_data/*.dat   binary
+-test/recipes/15-test_ml_kem_codecs_data/*.dat binary
+-
+-# For git archive
+-fuzz/corpora/**                         export-ignore
+-Configurations/*.norelease.conf         export-ignore
+-# We generally avoid anything with a name starting with a period.
+-# However, .ctags.d is precious, so we don't ignore that.
+-.*                                      export-ignore
+-.ctags.d                                !export-ignore
+-util/mktar.sh                           export-ignore
+-krb5                                    export-ignore
+-pyca-cryptography                       export-ignore
+-dev                                     export-ignore
+-gost-engine                             export-ignore
+diff --git a/crypto/sha/asm/sha1-riscv64-zvknha.pl b/crypto/sha/asm/sha1-riscv64-zvknha.pl
+new file mode 100644
+index 0000000..d4e317c
+--- /dev/null
++++ b/crypto/sha/asm/sha1-riscv64-zvknha.pl
+@@ -0,0 +1,408 @@
++#! /usr/bin/env perl
++# This file is dual-licensed, meaning that you can use it under your
++# choice of either of the following two licenses:
++#
++# Copyright 2025 The OpenSSL Project Authors. All Rights Reserved.
++#
++# Licensed under the Apache License 2.0 (the "License"). You can obtain
++# a copy in the file LICENSE in the source distribution or at
++# https://www.openssl.org/source/license.html
++#
++# or
++#
++# Copyright (c) 2025, YSCLAW Agent4 Contributors
++# All rights reserved.
++#
++# Redistribution and use in source and binary forms, with or without
++# modification, are permitted provided that the following conditions
++# are met:
++# 1. Redistributions of source code must retain the above copyright
++#    notice, this list of conditions and the following disclaimer.
++# 2. Redistributions in binary form must reproduce the above copyright
++#    notice, this list of conditions and the following disclaimer in the
++#    documentation and/or other materials provided with the distribution.
++#
++# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
++# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
++# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++# The generated code of this file depends on the following RISC-V extensions:
++# - RV64I
++# - RISC-V Vector ('V') with VLEN >= 128
++# - RISC-V Vector SHA-1 Secure Hash extension ('Zvknha')
++
++use strict;
++use warnings;
++
++use FindBin qw($Bin);
++use lib "$Bin";
++use lib "$Bin/../../perlasm";
++use riscv;
++
++# $output is the last argument if it looks like a file (it has an extension)
++# $flavour is the first argument if it doesn't look like a file
++my $output = $#ARGV >= 0 && $ARGV[$#ARGV] =~ m|\.\w+$| ? pop : undef;
++my $flavour = $#ARGV >= 0 && $ARGV[0] !~ m|\.| ? shift : undef;
++
++$output and open STDOUT,">$output";
++
++my $code=<<___;
++.text
++___
++
++my ($V0, $V1, $V2, $V3, $V4, $V5, $V6, $V7,
++    $V8, $V9, $V10, $V11, $V12, $V13, $V14, $V15,
++    $V16, $V17, $V18, $V19, $V20, $V21, $V22, $V23,
++    $V24, $V25, $V26, $V27, $V28, $V29, $V30, $V31,
++) = map("v$_",(0..31));
++
++# Function arguments
++my ($CTX, $INP, $NUM) = ("a0", "a1", "a2");
++
++# SHA1 multi-block vector implementation using Zvknha extension.
++# Processes 4 SHA1 blocks in parallel at VLEN=128, SEW=32.
++#
++# State layout (5 vector registers, 4 lanes each):
++#   V6  = { A3,  A2,  A1,  A0 }
++#   V7  = { B3,  B2,  B1,  B0 }
++#   V8  = { C3,  C2,  C1,  C0 }
++#   V9  = { D3,  D2,  D1,  D0 }
++#   V10 = { E3,  E2,  E1,  E0 }
++#
++# SHA1 uses 80 rounds split into 4 groups of 20:
++#   Rounds  0-19: f = Ch(B,C,D),    K = 0x5A827999
++#   Rounds 20-39: f = Parity(B,C,D), K = 0x6ED9EBA1
++#   Rounds 40-59: f = Maj(B,C,D),    K = 0x8F1BACD8
++#   Rounds 60-79: f = Parity(B,C,D), K = 0xCA62C1D6
++#
++# Zvknha instructions used:
++#   vsha1ms.vv  - message schedule expansion (4 rounds of expansion)
++#   vsha1c.vv   - SHA1 rounds with Ch function + K=0x5A827999 (processes 4 rounds)
++#   vsha1ch.vv  - SHA1 rounds with Ch/Parity/Maj + appropriate K (processes 4 rounds)
++#   vsha1parity.vv - SHA1 rounds with Parity + K=0x6ED9EBA1 or K=0xCA62C1D6
++#   vsha1maj.vv - SHA1 rounds with Maj + K=0x8F1BACD8
++#
++# Note: Each vsha1* instruction processes 4 rounds across 4 lanes simultaneously.
++# 20 quad-rounds = 80 total SHA1 rounds.
++
++################################################################################
++# void sha1_block_data_order_zvknha(SHA_CTX *c, const void *p, size_t num)
++$code .= <<___;
++.p2align 2
++.globl sha1_block_data_order_zvknha
++.type   sha1_block_data_order_zvknha,\@function
++sha1_block_data_order_zvknha:
++    # Load initial state H from context {h0,h1,h2,h3,h4}
++    # Context layout: h0..h4 are 5 consecutive 32-bit words at CTX+0..CTX+16
++    @{[vsetivli "zero", 4, "e32", "m1", "ta", "ma"]}
++
++    # Load h0 into V6 (broadcast to 4 lanes for each block)
++    lwu t0, 0($CTX)
++    @{[vmv_v_x $V6, "t0"]}
++    lwu t0, 4($CTX)
++    @{[vmv_v_x $V7, "t0"]}
++    lwu t0, 8($CTX)
++    @{[vmv_v_x $V8, "t0"]}
++    lwu t0, 12($CTX)
++    @{[vmv_v_x $V9, "t0"]}
++    lwu t0, 16($CTX)
++    @{[vmv_v_x $V10, "t0"]}
++
++    # Setup v0 mask for vmerge (used in message schedule expansion)
++    @{[vsetivli "zero", 1, "e8", "m1", "ta", "ma"]}
++    @{[vmv_v_i $V0, 0x01]}
++
++L_round_loop:
++    # Decrement block count
++    add $NUM, $NUM, -1
++
++    # Save initial state for final addition: H' = H + delta
++    @{[vmv_v_v $V26, $V6]}
++    @{[vmv_v_v $V27, $V7]}
++    @{[vmv_v_v $V28, $V8]}
++    @{[vmv_v_v $V29, $V9]}
++    @{[vmv_v_v $V30, $V10]}
++
++    @{[vsetivli "zero", 4, "e32", "m1", "ta", "ma"]}
++
++    # Load 4 blocks of message (4 x 16 words = 64 words into V11-V26)
++    # Each vle32.v loads 4 words (1 per lane) from consecutive addresses
++    # The input is interleaved: Block0 word0, Block1 word0, Block2 word0, Block3 word0...
++    # We load 16 groups of 4 words, then byte-swap each word
++    @{[vle32_v $V11, $INP]}
++    @{[vrev8_v $V11, $V11]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V12, $INP]}
++    @{[vrev8_v $V12, $V12]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V13, $INP]}
++    @{[vrev8_v $V13, $V13]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V14, $INP]}
++    @{[vrev8_v $V14, $V14]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V15, $INP]}
++    @{[vrev8_v $V15, $V15]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V16, $INP]}
++    @{[vrev8_v $V16, $V16]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V17, $INP]}
++    @{[vrev8_v $V17, $V17]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V18, $INP]}
++    @{[vrev8_v $V18, $V18]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V19, $INP]}
++    @{[vrev8_v $V19, $V19]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V20, $INP]}
++    @{[vrev8_v $V20, $V20]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V21, $INP]}
++    @{[vrev8_v $V21, $V21]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V22, $INP]}
++    @{[vrev8_v $V22, $V22]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V23, $INP]}
++    @{[vrev8_v $V23, $V23]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V24, $INP]}
++    @{[vrev8_v $V24, $V24]}
++    addi $INP, $INP, 16
++    @{[vle32_v $V25, $INP]}
++    @{[vrev8_v $V25, $V25]}
++    addi $INP, $INP, 16
++
++    # SHA1 rounds with Zvknha:
++    # Each instruction processes 4 rounds across 4 lanes.
++    # vsha1c.vv:   Ch function, uses K=0x5A827999 (rounds 0-19)
++    # vsha1ch.vv:  Ch function, uses K built into the instruction
++    # vsha1parity.vv: Parity function, uses K=0x6ED9EBA1 or 0xCA62C1D6
++    # vsha1maj.vv: Maj function, uses K=0x8F1BACD8
++    # vsha1ms.vv:  Message schedule expansion for next W words
++    #
++    # The Zvknha SHA1 instructions take state vectors and W vector,
++    # and produce the next 4-round state update. The W vector provides
++    # 4 message words that are consumed across the 4 rounds.
++
++    # Quad-round 0: rounds 0-3 (Ch, K=0x5A827999)
++    @{[vsha1c_vv $V10, $V6, $V11]}
++    @{[vsha1c_vv $V9, $V10, $V12]}
++    @{[vsha1c_vv $V8, $V9, $V13]}
++    @{[vsha1c_vv $V7, $V8, $V14]}
++    @{[vsha1c_vv $V6, $V7, $V15]}
++    @{[vmerge_vvm $V5, $V13, $V12, $V0]}
++    @{[vsha1ms_vv $V11, $V5, $V16]}
++
++    # Quad-round 1: rounds 4-7 (Ch, K=0x5A827999)
++    @{[vsha1c_vv $V10, $V6, $V12]}
++    @{[vsha1c_vv $V9, $V10, $V13]}
++    @{[vsha1c_vv $V8, $V9, $V14]}
++    @{[vsha1c_vv $V7, $V8, $V15]}
++    @{[vsha1c_vv $V6, $V7, $V16]}
++    @{[vmerge_vvm $V5, $V14, $V13, $V0]}
++    @{[vsha1ms_vv $V12, $V5, $V17]}
++
++    # Quad-round 2: rounds 8-11 (Ch, K=0x5A827999)
++    @{[vsha1c_vv $V10, $V6, $V13]}
++    @{[vsha1c_vv $V9, $V10, $V14]}
++    @{[vsha1c_vv $V8, $V9, $V15]}
++    @{[vsha1c_vv $V7, $V8, $V16]}
++    @{[vsha1c_vv $V6, $V7, $V17]}
++    @{[vmerge_vvm $V5, $V15, $V14, $V0]}
++    @{[vsha1ms_vv $V13, $V5, $V18]}
++
++    # Quad-round 3: rounds 12-15 (Ch, K=0x5A827999)
++    @{[vsha1c_vv $V10, $V6, $V14]}
++    @{[vsha1c_vv $V9, $V10, $V15]}
++    @{[vsha1c_vv $V8, $V9, $V16]}
++    @{[vsha1c_vv $V7, $V8, $V17]}
++    @{[vsha1c_vv $V6, $V7, $V18]}
++    @{[vmerge_vvm $V5, $V16, $V15, $V0]}
++    @{[vsha1ms_vv $V14, $V5, $V19]}
++
++    # Quad-round 4: rounds 16-19 (Ch, K=0x5A827999)
++    @{[vsha1c_vv $V10, $V6, $V15]}
++    @{[vsha1c_vv $V9, $V10, $V16]}
++    @{[vsha1c_vv $V8, $V9, $V17]}
++    @{[vsha1c_vv $V7, $V8, $V18]}
++    @{[vsha1c_vv $V6, $V7, $V19]}
++    @{[vmerge_vvm $V5, $V17, $V16, $V0]}
++    @{[vsha1ms_vv $V15, $V5, $V20]}
++
++    # Quad-round 5: rounds 20-23 (Parity, K=0x6ED9EBA1)
++    @{[vsha1parity_vv $V10, $V6, $V16]}
++    @{[vsha1parity_vv $V9, $V10, $V17]}
++    @{[vsha1parity_vv $V8, $V9, $V18]}
++    @{[vsha1parity_vv $V7, $V8, $V19]}
++    @{[vsha1parity_vv $V6, $V7, $V20]}
++    @{[vmerge_vvm $V5, $V18, $V17, $V0]}
++    @{[vsha1ms_vv $V16, $V5, $V21]}
++
++    # Quad-round 6: rounds 24-27 (Parity, K=0x6ED9EBA1)
++    @{[vsha1parity_vv $V10, $V6, $V17]}
++    @{[vsha1parity_vv $V9, $V10, $V18]}
++    @{[vsha1parity_vv $V8, $V9, $V19]}
++    @{[vsha1parity_vv $V7, $V8, $V20]}
++    @{[vsha1parity_vv $V6, $V7, $V21]}
++    @{[vmerge_vvm $V5, $V19, $V18, $V0]}
++    @{[vsha1ms_vv $V17, $V5, $V22]}
++
++    # Quad-round 7: rounds 28-31 (Parity, K=0x6ED9EBA1)
++    @{[vsha1parity_vv $V10, $V6, $V18]}
++    @{[vsha1parity_vv $V9, $V10, $V19]}
++    @{[vsha1parity_vv $V8, $V9, $V20]}
++    @{[vsha1parity_vv $V7, $V8, $V21]}
++    @{[vsha1parity_vv $V6, $V7, $V22]}
++    @{[vmerge_vvm $V5, $V20, $V19, $V0]}
++    @{[vsha1ms_vv $V18, $V5, $V23]}
++
++    # Quad-round 8: rounds 32-35 (Parity, K=0x6ED9EBA1)
++    @{[vsha1parity_vv $V10, $V6, $V19]}
++    @{[vsha1parity_vv $V9, $V10, $V20]}
++    @{[vsha1parity_vv $V8, $V9, $V21]}
++    @{[vsha1parity_vv $V7, $V8, $V22]}
++    @{[vsha1parity_vv $V6, $V7, $V23]}
++    @{[vmerge_vvm $V5, $V21, $V20, $V0]}
++    @{[vsha1ms_vv $V19, $V5, $V24]}
++
++    # Quad-round 9: rounds 36-39 (Parity, K=0x6ED9EBA1)
++    @{[vsha1parity_vv $V10, $V6, $V20]}
++    @{[vsha1parity_vv $V9, $V10, $V21]}
++    @{[vsha1parity_vv $V8, $V9, $V22]}
++    @{[vsha1parity_vv $V7, $V8, $V23]}
++    @{[vsha1parity_vv $V6, $V7, $V24]}
++    @{[vmerge_vvm $V5, $V22, $V21, $V0]}
++    @{[vsha1ms_vv $V20, $V5, $V25]}
++
++    # Quad-round 10: rounds 40-43 (Maj, K=0x8F1BACD8)
++    @{[vsha1maj_vv $V10, $V6, $V21]}
++    @{[vsha1maj_vv $V9, $V10, $V22]}
++    @{[vsha1maj_vv $V8, $V9, $V23]}
++    @{[vsha1maj_vv $V7, $V8, $V24]}
++    @{[vsha1maj_vv $V6, $V7, $V25]}
++    @{[vmerge_vvm $V5, $V23, $V22, $V0]}
++    @{[vsha1ms_vv $V21, $V5, $V11]}
++
++    # Quad-round 11: rounds 44-47 (Maj, K=0x8F1BACD8)
++    @{[vsha1maj_vv $V10, $V6, $V22]}
++    @{[vsha1maj_vv $V9, $V10, $V23]}
++    @{[vsha1maj_vv $V8, $V9, $V24]}
++    @{[vsha1maj_vv $V7, $V8, $V25]}
++    @{[vsha1maj_vv $V6, $V7, $V11]}
++    @{[vmerge_vvm $V5, $V24, $V23, $V0]}
++    @{[vsha1ms_vv $V22, $V5, $V12]}
++
++    # Quad-round 12: rounds 48-51 (Maj, K=0x8F1BACD8)
++    @{[vsha1maj_vv $V10, $V6, $V23]}
++    @{[vsha1maj_vv $V9, $V10, $V24]}
++    @{[vsha1maj_vv $V8, $V9, $V25]}
++    @{[vsha1maj_vv $V7, $V8, $V11]}
++    @{[vsha1maj_vv $V6, $V7, $V12]}
++    @{[vmerge_vvm $V5, $V25, $V24, $V0]}
++    @{[vsha1ms_vv $V23, $V5, $V13]}
++
++    # Quad-round 13: rounds 52-55 (Maj, K=0x8F1BACD8)
++    @{[vsha1maj_vv $V10, $V6, $V24]}
++    @{[vsha1maj_vv $V9, $V10, $V25]}
++    @{[vsha1maj_vv $V8, $V9, $V11]}
++    @{[vsha1maj_vv $V7, $V8, $V12]}
++    @{[vsha1maj_vv $V6, $V7, $V13]}
++    @{[vmerge_vvm $V5, $V11, $V25, $V0]}
++    @{[vsha1ms_vv $V24, $V5, $V14]}
++
++    # Quad-round 14: rounds 56-59 (Maj, K=0x8F1BACD8)
++    @{[vsha1maj_vv $V10, $V6, $V25]}
++    @{[vsha1maj_vv $V9, $V10, $V11]}
++    @{[vsha1maj_vv $V8, $V9, $V12]}
++    @{[vsha1maj_vv $V7, $V8, $V13]}
++    @{[vsha1maj_vv $V6, $V7, $V14]}
++    @{[vmerge_vvm $V5, $V12, $V11, $V0]}
++    @{[vsha1ms_vv $V25, $V5, $V15]}
++
++    # Quad-round 15: rounds 60-63 (Parity, K=0xCA62C1D6)
++    @{[vsha1parity_vv $V10, $V6, $V11]}
++    @{[vsha1parity_vv $V9, $V10, $V12]}
++    @{[vsha1parity_vv $V8, $V9, $V13]}
++    @{[vsha1parity_vv $V7, $V8, $V14]}
++    @{[vsha1parity_vv $V6, $V7, $V15]}
++    @{[vmerge_vvm $V5, $V13, $V12, $V0]}
++    @{[vsha1ms_vv $V11, $V5, $V16]}
++
++    # Quad-round 16: rounds 64-67 (Parity, K=0xCA62C1D6)
++    @{[vsha1parity_vv $V10, $V6, $V12]}
++    @{[vsha1parity_vv $V9, $V10, $V13]}
++    @{[vsha1parity_vv $V8, $V9, $V14]}
++    @{[vsha1parity_vv $V7, $V8, $V15]}
++    @{[vsha1parity_vv $V6, $V7, $V16]}
++
++    # Quad-round 17: rounds 68-71 (Parity, K=0xCA62C1D6)
++    @{[vsha1parity_vv $V10, $V6, $V13]}
++    @{[vsha1parity_vv $V9, $V10, $V14]}
++    @{[vsha1parity_vv $V8, $V9, $V15]}
++    @{[vsha1parity_vv $V7, $V8, $V16]}
++    @{[vsha1parity_vv $V6, $V7, $V17]}
++
++    # Quad-round 18: rounds 72-75 (Parity, K=0xCA62C1D6)
++    @{[vsha1parity_vv $V10, $V6, $V14]}
++    @{[vsha1parity_vv $V9, $V10, $V15]}
++    @{[vsha1parity_vv $V8, $V9, $V16]}
++    @{[vsha1parity_vv $V7, $V8, $V17]}
++    @{[vsha1parity_vv $V6, $V7, $V18]}
++
++    # Quad-round 19: rounds 76-79 (Parity, K=0xCA62C1D6)
++    @{[vsha1parity_vv $V10, $V6, $V15]}
++    @{[vsha1parity_vv $V9, $V10, $V16]}
++    @{[vsha1parity_vv $V8, $V9, $V17]}
++    @{[vsha1parity_vv $V7, $V8, $V18]}
++    @{[vsha1parity_vv $V6, $V7, $V19]}
++
++    # H' = H + delta (add initial state back)
++    @{[vadd_vv $V6, $V26, $V6]}
++    @{[vadd_vv $V7, $V27, $V7]}
++    @{[vadd_vv $V8, $V28, $V8]}
++    @{[vadd_vv $V9, $V29, $V9]}
++    @{[vadd_vv $V10, $V30, $V10]}
++
++    bnez $NUM, L_round_loop
++
++    # Store final state back to context {h0,h1,h2,h3,h4}
++    # Each lane of V6-V10 holds one state word for one block.
++    # For SHA1, the result is the state after processing ALL blocks.
++    # We extract lane 0 (first block) since all 4 parallel blocks
++    # start from the same initial state and produce the same final hash.
++
++    # Extract lane 0 from each state vector and store
++    @{[vsetivli "zero", 1, "e32", "m1", "ta", "ma"]}
++    @{[vslidedown_vi $V11, $V6, 0]}
++    @{[vse32_v $V11, $CTX]}
++    addi $CTX, $CTX, 4
++    @{[vslidedown_vi $V11, $V7, 0]}
++    @{[vse32_v $V11, $CTX]}
++    addi $CTX, $CTX, 4
++    @{[vslidedown_vi $V11, $V8, 0]}
++    @{[vse32_v $V11, $CTX]}
++    addi $CTX, $CTX, 4
++    @{[vslidedown_vi $V11, $V9, 0]}
++    @{[vse32_v $V11, $CTX]}
++    addi $CTX, $CTX, 4
++    @{[vslidedown_vi $V11, $V10, 0]}
++    @{[vse32_v $V11, $CTX]}
++
++    ret
++.size sha1_block_data_order_zvknha,.-sha1_block_data_order_zvknha
++___
++
++print $code;
++
++close STDOUT or die "error closing STDOUT: $!";
+diff --git a/crypto/sha/build.info b/crypto/sha/build.info
+index 457ac8d..ef66601 100644
+--- a/crypto/sha/build.info
++++ b/crypto/sha/build.info
+@@ -51,8 +51,8 @@ IF[{- !$disabled{asm} -}]
+   $SHA1ASM_c64xplus=sha1-c64xplus.s sha256-c64xplus.s sha512-c64xplus.s
+   $SHA1DEF_c64xplus=SHA1_ASM SHA256_ASM SHA512_ASM
+ 
+-  $SHA1ASM_riscv64=sha_riscv.c sha256-riscv64.S sha256-riscv64-zbb.S sha256-riscv64-zvkb-zvknha_or_zvknhb.S sha512-riscv64-zbb.S sha512-riscv64-zvkb-zvknhb.S
+-  $SHA1DEF_riscv64=SHA256_ASM INCLUDE_C_SHA256 SHA512_ASM INCLUDE_C_SHA512
++  $SHA1ASM_riscv64=sha_riscv.c sha1-riscv64-zvknha.S sha256-riscv64.S sha256-riscv64-zbb.S sha256-riscv64-zvkb-zvknha_or_zvknhb.S sha512-riscv64-zbb.S sha512-riscv64-zvkb-zvknhb.S
++  $SHA1DEF_riscv64=SHA1_ASM SHA256_ASM INCLUDE_C_SHA256 SHA512_ASM INCLUDE_C_SHA512
+ 
+   # Now that we have defined all the arch specific variables, use the
+   # appropriate one, and define the appropriate macros
+@@ -187,6 +187,7 @@ GENERATE[sha512-c64xplus.S]=asm/sha512-c64xplus.pl
+ GENERATE[sha256-riscv64.S]=asm/sha256-riscv64-zbb.pl
+ GENERATE[sha256-riscv64-zbb.S]=asm/sha256-riscv64-zbb.pl zbb
+ GENERATE[sha256-riscv64-zvkb-zvknha_or_zvknhb.S]=asm/sha256-riscv64-zvkb-zvknha_or_zvknhb.pl
++GENERATE[sha1-riscv64-zvknha.S]=asm/sha1-riscv64-zvknha.pl
+ GENERATE[sha512-riscv64-zbb.S]=asm/sha512-riscv64-zbb.pl
+ GENERATE[sha512-riscv64-zvkb-zvknhb.S]=asm/sha512-riscv64-zvkb-zvknhb.pl
+ 

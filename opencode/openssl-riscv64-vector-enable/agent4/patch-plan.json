@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-diag-20250609-001",
+  "blueprintId": "diag-20250609-001",
+  "createdAt": "2026-06-12T02:02:13.480Z",
+  "objective": "OpenSSL fips.so was built without the 'v' extension (compiled as rv64gc scalar-only), leaving SG2044's RVV 1.0 vector hardware completely unused. The linux64-riscv64 target in Configurations/10-main.conf does not set -march=rv64gcv.",
+  "changes": [
+    {
+      "filePath": "Configurations/10-main.conf",
+      "action": "modify",
+      "rationale": "OpenSSL fips.so was built without the 'v' extension (compiled as rv64gc scalar-only), leaving SG2044's RVV 1.0 vector hardware completely unused. The linux64-riscv64 target in Configurations/10-main.conf does not set -march=rv64gcv.",
+      "instructions": [
+        "编辑前先检查文件。",
+        "做出最小的、保持行为不变的性能修复，以解决 RootCauseBlueprint 指出的根因。",
+        "避免无关重构和格式噪音。"
+      ],
+      "risk": "low"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case test_evp",
+      "agent1 patch_regression --case openssl_speed_sha256",
+      "agent1 patch_regression --case readelf_check_fips_arch",
+      "agent1 patch_regression --case perf_annotate_sha256_riscv64"
+    ],
+    "requiredTests": [
+      "test_evp",
+      "openssl_speed_sha256",
+      "readelf_check_fips_arch",
+      "perf_annotate_sha256_riscv64"
+    ]
+  },
+  "expectedDiffSummary": "候选补丁应通过聚焦修改 Configurations/10-main.conf 来解决 blueprint diag-20250609-001。"
+}

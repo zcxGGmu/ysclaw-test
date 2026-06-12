@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "diag-20260610-002",
+  "source": {
+    "agent": "agent3",
+    "createdAt": "2025-06-10T00:00:00Z",
+    "software": "openssl",
+    "testcaseIds": ["test_bio_enc"]
+  },
+  "problem": {
+    "summary": "AES_encrypt on SG2044 (RVV 1.0 @ VLEN=128) runs entirely in scalar T-table mode with zero vector or crypto instructions. IPC=0.878, test_bio_enc duration=5.3s, 569 lines of pure scalar assembly. Each AES round requires 16 scalar lwu T-table lookups + 16 XOR operations forming a long dependency chain.",
+    "evidence": [
+      "perf annotate: AES_encrypt (31 samples) shows zero v*/vaes* instructions; all scalar lwu/xor/addw/srl/and instructions",
+      "perf stat: IPC=0.878 (compute/latency-bound), L1_dcache_load_miss_rate=1.503% (eliminates memory-bound)",
+      "perf stat: branch_miss_rate=7.816% (elevated, T-table loop bgtz branches)",
+      "SG2044 hardware supports RVV 1.0 but AES code does not use vector or crypto instructions",
+      "OpenSSL has existing zvkned vector crypto AES paths: aes-riscv64-zvkned.pl and aes-riscv64-zvbb-zvkg-zvkned.pl in crypto/aes/asm/"
+    ]
+  },
+  "rootCause": {
+    "summary": "Build configuration lacks zvkned crypto extension flag. AES_encrypt T-table implementation runs pure scalar. OpenSSL's existing vector crypto AES assembly (aes-riscv64-zvkned.pl) is never selected because the compiler and runtime dispatch cannot detect zvkned capability.",
+    "candidateFiles": [
+      "Configurations/10-main.conf"
+    ],
+    "performanceFactors": [
+      "IPC=0.878 (low for 3-wide OoO C920, T-table dependency chain limits ILP)",
+      "16 scalar lwu per round + 16 xor forming serial dependency",
+      "branch_miss_rate=7.816% (T-table loop overhead)",
+      "If zvkned available: one vaesem.vv/vaesef.vv replaces entire round loop, expected 3-5x speedup"
+    ]
+  },
+  "constraints": {
+    "riskLevel": "medium",
+    "mustPreserve": [
+      "Backward compatibility: non-zvkned systems must fall back to scalar T-table",
+      "Runtime dispatch: crypto/riscvcap.c riscv_hwprobe() must correctly detect zvkned",
+      "Prior rv64gcv optimization: must not regress SHA-256 vector performance",
+      "Cross-compilation: change must not break non-RISC-V targets"
+    ]
+  },
+  "validation": {
+    "requiredTests": [
+      "test_bio_enc",
+      "openssl_speed_aes128cbc",
+      "readelf_check_libcrypto_arch",
+      "perf_annotate_AES_encrypt"
+    ]
+  }
+}
