@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "ysclaw.verified_patch_package.v1",
+  "packageId": "vpp-pc-bp-openssl-diag-20260612-173745",
+  "createdAt": "2026-06-12T10:58:11.775Z",
+  "blueprintId": "bp-openssl-diag-20260612-173745",
+  "patchPlanId": "pp-bp-openssl-diag-20260612-173745",
+  "patchCandidateId": "pc-bp-openssl-diag-20260612-173745",
+  "rootCauseSummary": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+  "patchSummary": "Document SHA-256-specific OPENSSL_riscvcap examples so RISC-V benchmarks can force and verify the Zbb or vector crypto dispatch paths without changing generic RISC-V build targets.",
+  "blueprint": {
+    "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+    "blueprintId": "bp-openssl-diag-20260612-173745",
+    "source": {
+      "agent": "agent3",
+      "createdAt": "2026-06-12T17:37:45+08:00",
+      "software": "openssl",
+      "testcaseIds": [
+        "openssl_test_evp"
+      ]
+    },
+    "problem": {
+      "summary": "OpenSSL EVP SHA-256 on SOPHON SG2044 RISC-V executes sha256_block_data_order_riscv64 as a purely scalar hot path despite hardware RVV 1.0 and Zbb capability.",
+      "evidence": [
+        "perf stat for test_evp reports duration_time 210141573561 ns, IPC 1.881, L1_dcache_load_miss_rate 0.231%, and LLC_load_miss_rate 4.270%, indicating a compute-bound hotspot rather than a memory-bound workload.",
+        "perf annotate for fips.so shows sha256_block_data_order_riscv64 with 3388 samples and a hot loop composed of scalar lbu, lw, sw, srlw, sllw, or, xor, and, add, and addw instructions.",
+        "The annotated SHA-256 path contains no RVV v* instructions and no Zbb rotate or byte-swap acceleration instructions such as roriw or rev8.",
+        "Agent3 matched this before-state to known OpenSSL RISC-V SHA-256 optimizations that enable Zbb and vector crypto code generation when the target arch includes the relevant extension flags.",
+        "Agent4 source inspection found that current OpenSSL master already builds baseline, Zbb, and vector SHA-256 RISC-V implementations for asm_arch=riscv64 and selects them at runtime through hwprobe or OPENSSL_riscvcap capability bits."
+      ]
+    },
+    "rootCause": {
+      "summary": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+      "candidateFiles": [
+        "doc/man3/OPENSSL_riscvcap.pod"
+      ],
+      "performanceFactors": [
+        "RISC-V runtime capability selection",
+        "OPENSSL_riscvcap override syntax",
+        "SHA-256 RISC-V assembly/code generation",
+        "RVV vector crypto dispatch verification",
+        "Zbb rotate and byte-swap dispatch verification"
+      ]
+    },
+    "constraints": {
+      "riskLevel": "medium",
+      "mustPreserve": [
+        "Do not change generic RISC-V targets in a way that requires RVV or Zbb on hardware/toolchains that do not support those extensions.",
+        "Keep the patch minimal and focused on documenting the opt-in runtime capability path.",
+        "Preserve existing OpenSSL test behavior for non-RISC-V and generic RISC-V builds.",
+        "Do not modify generated assembly output without confirming the corresponding generator source."
+      ]
+    },
+    "validation": {
+      "requiredTests": [
+        "openssl_test_evp",
+        "openssl_riscvcap_sha256_docs",
+        "openssl_sha256_perf_target"
+      ],
+      "regressionCommand": "agent1 patch_regression --case openssl_test_evp"
+    }
+  },
+  "patchPlan": {
+    "schemaVersion": "ysclaw.patch_plan.v1",
+    "patchPlanId": "pp-bp-openssl-diag-20260612-173745",
+    "blueprintId": "bp-openssl-diag-20260612-173745",
+    "createdAt": "2026-06-12T10:49:56.181Z",
+    "objective": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+    "changes": [
+      {
+        "filePath": "doc/man3/OPENSSL_riscvcap.pod",
+        "action": "modify",
+        "rationale": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+        "instructions": [
+          "In the examples section, add a RISC-V SHA-256 benchmarking example that enables ZBB through OPENSSL_riscvcap.",
+          "Add a second example for the vector SHA-256 path that includes V, ZVKB, and one SHA-2 vector crypto extension.",
+          "State that these examples are for testing or benchmarking override scenarios and that normal production use should prefer kernel hwprobe detection.",
+          "Avoid changing capability parsing semantics or generic RISC-V build targets."
+        ],
+        "risk": "medium"
+      }
+    ],
+    "validationPlan": {
+      "regressionTarget": "agent1 patch_regression",
+      "commands": [
+        "agent1 patch_regression --case openssl_test_evp"
+      ],
+      "requiredTests": [
+        "openssl_test_evp",
+        "openssl_riscvcap_sha256_docs",
+        "openssl_sha256_perf_target"
+      ]
+    },
+    "expectedDiffSummary": "Document SHA-256-specific OPENSSL_riscvcap examples so RISC-V benchmarks can force and verify the Zbb or vector crypto dispatch paths without changing generic RISC-V build targets."
+  },
+  "patchCandidate": {
+    "schemaVersion": "ysclaw.patch_candidate.v1",
+    "patchCandidateId": "pc-bp-openssl-diag-20260612-173745",
+    "patchPlanId": "pp-bp-openssl-diag-20260612-173745",
+    "createdAt": "2026-06-12T10:55:13.976Z",
+    "changedFiles": [
+      "doc/man3/OPENSSL_riscvcap.pod"
+    ],
+    "gitDiff": "diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod\nindex 3113b98..dc7dfc9 100644\n--- a/doc/man3/OPENSSL_riscvcap.pod\n+++ b/doc/man3/OPENSSL_riscvcap.pod\n@@ -205,6 +205,20 @@ Only enable the vector extension:\n \n  export OPENSSL_riscvcap=\"rv64gc_v\"\n \n+Force the scalar Zbb SHA-256 path for testing or benchmarking:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_zbb\"\n+ openssl speed -evp sha256\n+\n+Force the vector SHA-256 path for testing or benchmarking on systems with\n+VLEN >= 128 and the required vector crypto extensions:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_v_zvkb_zvknha\"\n+ openssl speed -evp sha256\n+\n+These overrides are intended for explicit testing. For normal execution on\n+Linux, prefer the capabilities detected by the kernel hardware probing support.\n+\n =head1 COPYRIGHT\n \n Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.\n",
+    "buildModeInvocation": "OpenCode 构建模式",
+    "notes": []
+  },
+  "regressionResult": {
+    "schemaVersion": "ysclaw.patch_regression_result.v1",
+    "regressionId": "reg-pc-bp-openssl-diag-20260612-173745",
+    "patchCandidateId": "pc-bp-openssl-diag-20260612-173745",
+    "status": "error",
+    "command": "agent1 patch_regression --case openssl_test_evp",
+    "tests": [
+      {
+        "name": "agent1 patch_regression --case openssl_test_evp",
+        "status": "error",
+        "output": "agent1 command is not available in the current environment."
+      },
+      {
+        "name": "podchecker doc/man3/OPENSSL_riscvcap.pod",
+        "status": "pass",
+        "output": "doc/man3/OPENSSL_riscvcap.pod pod syntax OK."
+      },
+      {
+        "name": "perl Configure --help RISC-V target listing",
+        "status": "pass",
+        "output": "Output includes linux64-riscv64, linux32-riscv32, BSD-riscv64, and android-riscv64."
+      },
+      {
+        "name": "RISC-V SHA-256 dispatcher source check",
+        "status": "pass",
+        "output": "crypto/sha/sha_riscv.c selects vector SHA-256 when RISCV_HAS_ZVKB and RISCV_HAS_ZVKNHA or RISCV_HAS_ZVKNHB are present, selects Zbb SHA-256 when RISCV_HAS_ZBB is present, and otherwise falls back to sha256_block_data_order_riscv64."
+      },
+      {
+        "name": "perl util/find-doc-nits",
+        "status": "error",
+        "output": "find-doc-nits requires configdata.pm. Out-of-tree Configure failed in this environment with unsupported inherited options: no-aes, no-hmac."
+      },
+      {
+        "name": "target hardware openssl speed -evp sha256",
+        "status": "error",
+        "output": "Not run: current host is macOS arm64, not the SOPHON SG2044 RISC-V target."
+      },
+      {
+        "name": "target hardware perf annotate sha256_block_data_order",
+        "status": "error",
+        "output": "Not run: requires the RISC-V target hardware and rebuilt binary."
+      }
+    ],
+    "artifacts": [
+      ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch.diff",
+      ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch-candidate.json",
+      ".yuan-sheng/optimize-riscv-sha256-march/reports/test-report.md",
+      ".yuan-sheng/optimize-riscv-sha256-march/reports/development-summary.md"
+    ],
+    "summary": "Agent1 regression could not be executed because agent1 is unavailable. Local documentation syntax, target listing, and source-path checks passed; RISC-V hardware performance verification remains required."
+  },
+  "verification": {
+    "status": "failed",
+    "verifiedAt": "2026-06-12T10:58:11.775Z",
+    "commands": [
+      "agent1 patch_regression --case openssl_test_evp"
+    ],
+    "artifacts": [
+      ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch.diff",
+      ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch-candidate.json",
+      ".yuan-sheng/optimize-riscv-sha256-march/reports/test-report.md",
+      ".yuan-sheng/optimize-riscv-sha256-march/reports/development-summary.md"
+    ]
+  },
+  "handoff": {
+    "targetAgent": "agent5",
+    "instructions": [
+      "以 Git 差异和回归证据作为事实来源。",
+      "在不改变已验证补丁内容的前提下准备拉取请求和提交材料。",
+      "在提交说明中保留 RootCauseBlueprint 和回归证据。"
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-diag-20260612-180518",
+  "blueprintId": "diag-20260612-180518",
+  "createdAt": "2026-06-12T12:38:11.412Z",
+  "objective": "The observed binary selected the baseline sha256_block_data_order_riscv64 path, but current OpenSSL already has RISC-V SHA-256 Zbb and vector runtime dispatch; the safe Agent4 action is to document SHA-2 capability override diagnostics instead of changing generic RISC-V build flags.",
+  "changes": [
+    {
+      "filePath": "doc/man3/OPENSSL_riscvcap.pod",
+      "action": "modify",
+      "rationale": "The observed binary selected the baseline sha256_block_data_order_riscv64 path, but current OpenSSL already has RISC-V SHA-256 Zbb and vector runtime dispatch; the safe Agent4 action is to document SHA-2 capability override diagnostics instead of changing generic RISC-V build flags.",
+      "instructions": [
+        "编辑前先检查文件。",
+        "添加最小的、保持行为不变的文档说明，展示 RISC-V SHA-2 capability override 诊断用法。",
+        "明确 OPENSSL_riscvcap 影响 runtime-dispatched implementations，不改变 compiler-selected architecture flags 或 linux64-riscv64 默认 target baseline。",
+        "明确普通 Linux 执行应优先使用 hwprobe-detected capabilities。",
+        "避免无关重构和格式噪音。"
+      ],
+      "risk": "low"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case openssl_test_slh_dsa"
+    ],
+    "requiredTests": [
+      "openssl_test_slh_dsa",
+      "podchecker_OPENSSL_riscvcap",
+      "riscv_sha256_dispatch_source_consistency"
+    ]
+  },
+  "expectedDiffSummary": "候选补丁应只修改 doc/man3/OPENSSL_riscvcap.pod，记录 RISC-V SHA-2 override 诊断示例和默认 target baseline 边界。"
+}

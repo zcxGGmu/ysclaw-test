@@ -1,0 +1,28 @@
+{
+  "regressionId": "reg-pc-diag-20260612-174210",
+  "patchCandidateId": "pc-diag-20260612-174210",
+  "status": "error",
+  "command": "agent1 patch_regression --case openssl_test_bio_enc",
+  "tests": [
+    {
+      "name": "podchecker_OPENSSL_riscvcap",
+      "status": "pass",
+      "output": "doc/man3/OPENSSL_riscvcap.pod pod syntax OK."
+    },
+    {
+      "name": "riscv_aes_source_consistency",
+      "status": "pass",
+      "output": "rg confirmed the new OPENSSL_riscvcap AES examples and existing RISC-V AES dispatch symbols rv64i_zkne_encrypt, rv64i_zvkned_encrypt, and RISCV_HAS_ZVKNED."
+    },
+    {
+      "name": "agent1_patch_regression_openssl_test_bio_enc",
+      "status": "error",
+      "output": "zsh:1: command not found: agent1"
+    }
+  ],
+  "artifacts": [
+    ".yuan-sheng/document-riscv-aes-capability-overrides/agent4/patch.diff",
+    "doc/man3/OPENSSL_riscvcap.pod"
+  ],
+  "summary": "Local documentation checks passed, but Agent1 regression could not run because the agent1 command is not available in this environment."
+}

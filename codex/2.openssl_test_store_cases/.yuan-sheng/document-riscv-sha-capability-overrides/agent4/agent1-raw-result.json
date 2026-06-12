@@ -1,0 +1,28 @@
+{
+  "regressionId": "reg-pc-diag-20260612-180925",
+  "patchCandidateId": "pc-diag-20260612-180925",
+  "status": "error",
+  "command": "agent1 patch_regression --case openssl_test_store_cases",
+  "tests": [
+    {
+      "name": "podchecker_OPENSSL_riscvcap",
+      "status": "pass",
+      "output": "doc/man3/OPENSSL_riscvcap.pod pod syntax OK."
+    },
+    {
+      "name": "riscv_sha_source_consistency",
+      "status": "pass",
+      "output": "rg confirmed the new OPENSSL_riscvcap SHA examples and existing RISC-V SHA-2 dispatch symbols sha256_block_data_order_zbb, sha256_block_data_order_zvkb_zvknha_or_zvknhb, sha512_block_data_order_zvkb_zvknhb, and RISCV_HAS_ZVKB_AND_ZVKNHB."
+    },
+    {
+      "name": "agent1_patch_regression_openssl_test_store_cases",
+      "status": "error",
+      "output": "zsh:1: command not found: agent1"
+    }
+  ],
+  "artifacts": [
+    ".yuan-sheng/document-riscv-sha-capability-overrides/agent4/patch.diff",
+    "doc/man3/OPENSSL_riscvcap.pod"
+  ],
+  "summary": "Local documentation checks passed, but Agent1 regression could not run because the agent1 command is not available in this environment."
+}

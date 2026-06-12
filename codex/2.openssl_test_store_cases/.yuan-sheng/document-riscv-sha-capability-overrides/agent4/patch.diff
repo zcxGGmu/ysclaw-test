@@ -1,0 +1,31 @@
+diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod
+index 3113b98..8c08c3b 100644
+--- a/doc/man3/OPENSSL_riscvcap.pod
++++ b/doc/man3/OPENSSL_riscvcap.pod
+@@ -205,6 +205,26 @@ Only enable the vector extension:
+ 
+  export OPENSSL_riscvcap="rv64gc_v"
+ 
++Enable RISC-V Zbb SHA-2 override testing:
++
++ export OPENSSL_riscvcap="rv64gc_zbb"
++
++Enable RISC-V vector SHA-256 override testing:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvknha"
++
++Enable RISC-V vector SHA-512 override testing:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvknhb"
++
++These SHA-specific overrides are intended for diagnostics and benchmarking.
++They affect runtime-dispatched implementations and do not change the
++compiler-selected base architecture or enable compile-time __riscv_zbb code
++generation. Vector length remains detected from hardware and is not overridden
++by these examples. For normal Linux execution, prefer hwprobe-detected
++capabilities over setting SHA-specific overrides. Current RISC-V SHA crypto
++dispatch covers SHA-2 paths and does not add a SHA-1 crypto dispatch path.
++
+ =head1 COPYRIGHT
+ 
+ Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.

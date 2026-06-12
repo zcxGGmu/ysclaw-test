@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ysclaw.patch_candidate.v1",
+  "patchCandidateId": "pc-diag-20260612-180518",
+  "patchPlanId": "pp-diag-20260612-180518",
+  "createdAt": "2026-06-12T12:41:22.025Z",
+  "changedFiles": [
+    "doc/man3/OPENSSL_riscvcap.pod"
+  ],
+  "gitDiff": "diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod\nindex 3113b98..5edddc1 100644\n--- a/doc/man3/OPENSSL_riscvcap.pod\n+++ b/doc/man3/OPENSSL_riscvcap.pod\n@@ -205,6 +205,26 @@ Only enable the vector extension:\n \n  export OPENSSL_riscvcap=\"rv64gc_v\"\n \n+Enable RISC-V Zbb SHA-2 override testing:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_zbb\"\n+\n+Enable RISC-V vector SHA-256 override testing:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_v_zvkb_zvknha\"\n+\n+Enable RISC-V vector SHA-512 override testing:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_v_zvkb_zvknhb\"\n+\n+These SHA-specific overrides are intended for diagnostics and benchmarking.\n+They affect runtime-dispatched implementations and do not change the\n+compiler-selected base architecture, the default linux64-riscv64 target\n+baseline, or compile-time __riscv_zbb code generation. Vector length remains\n+detected from hardware and is not overridden by these examples. For normal\n+Linux execution, prefer hwprobe-detected capabilities over setting\n+SHA-specific overrides.\n+\n =head1 COPYRIGHT\n \n Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.\n",
+  "buildModeInvocation": "OpenCode 构建模式",
+  "notes": []
+}

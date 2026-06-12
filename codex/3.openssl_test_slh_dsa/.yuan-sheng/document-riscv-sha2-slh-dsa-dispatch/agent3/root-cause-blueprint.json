@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "diag-20260612-180518",
+  "source": {
+    "agent": "agent3-lite-normalized-by-agent4",
+    "createdAt": "2026-06-12T11:05:18Z",
+    "software": "openssl",
+    "testcaseIds": [
+      "openssl_test_slh_dsa"
+    ]
+  },
+  "problem": {
+    "summary": "The openssl_test_slh_dsa profile on SG2044 reports sha256_block_data_order_riscv64 as a scalar RISC-V hot path with no vector instructions.",
+    "evidence": [
+      "Agent3 diagnosis diag-20260612-180518 reports duration 69.308967879 seconds, IPC 2.047, and L1 data-cache load miss rate 0.074%, suggesting a compute-bound SHA-256 path.",
+      "perf annotate for sha256_block_data_order_riscv64 shows scalar lbu, lw, sw, sllw, srlw, or, xor, and addw instruction sequences and no v* vector instructions.",
+      "The original report recommends adding -march=rv64gc_zba_zbb to linux64-riscv64, but also sets allow_auto_forward_to_agent4=false because ARM baseline, readelf Tag_RISCV_arch, and hwprobe evidence are missing.",
+      "Current OpenSSL master already includes RISC-V SHA-256 baseline, Zbb, and vector SHA-256 implementations in crypto/sha/build.info and dispatches them in crypto/sha/sha_riscv.c.",
+      "Raising the generic linux64-riscv64 -march baseline would allow compilers to emit extension instructions in ordinary C code and could break RISC-V systems without those extensions."
+    ]
+  },
+  "rootCause": {
+    "summary": "The observed binary selected the baseline sha256_block_data_order_riscv64 path, but current OpenSSL already has RISC-V SHA-256 Zbb and vector runtime dispatch; the safe Agent4 action is to document SHA-2 capability override diagnostics instead of changing generic RISC-V build flags.",
+    "candidateFiles": [
+      "doc/man3/OPENSSL_riscvcap.pod"
+    ],
+    "performanceFactors": [
+      "SLH-DSA SHA2 parameter sets repeatedly call SHA-256, so sha256_block_data_order_riscv64 can dominate a compute-bound profile.",
+      "crypto/sha/sha_riscv.c selects vector SHA-256 when ZVKB plus ZVKNHA or ZVKNHB and VLEN >= 128 are detected, otherwise Zbb when Zbb is detected, otherwise the baseline RV64 path.",
+      "OPENSSL_riscvcap can be used to test runtime capability selection, but it does not change compiler-selected base architecture or prove the profiled FIPS module was built with a given -march.",
+      "Documentation currently lists capability names but does not show SHA-2-specific override examples or explain the distinction between runtime dispatch diagnostics and default RISC-V target policy."
+    ]
+  },
+  "constraints": {
+    "riskLevel": "low",
+    "mustPreserve": [
+      "Do not change default RISC-V Configure targets or force new -march extensions.",
+      "Do not change SLH-DSA, FIPS provider, digest semantics, generated assembly, or SHA-256 dispatch logic without target hardware evidence and dedicated tests.",
+      "Keep the patch behavior-neutral and limited to documentation.",
+      "Clearly prefer Linux hwprobe-based runtime detection for normal execution."
+    ]
+  },
+  "validation": {
+    "requiredTests": [
+      "openssl_test_slh_dsa",
+      "podchecker_OPENSSL_riscvcap",
+      "riscv_sha256_dispatch_source_consistency"
+    ],
+    "regressionCommand": "agent1 patch_regression --case openssl_test_slh_dsa"
+  }
+}

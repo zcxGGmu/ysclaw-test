@@ -1,0 +1,6 @@
+- [x] Normalize and validate the Agent3 RootCauseBlueprint.
+- [x] Inspect RISC-V build configuration and SHA-256 generator sources.
+- [x] Generate an Agent4 PatchPlan.
+- [x] Implement the minimal opt-in OpenSSL configuration patch.
+- [x] Run available local verification commands.
+- [x] Generate PatchCandidate, PatchRegressionResult, Agent5 patch, VerifiedPatchPackage, and reports.

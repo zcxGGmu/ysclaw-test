@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ysclaw.patch_candidate.v1",
+  "patchCandidateId": "pc-bp-openssl-diag-20260612-173745",
+  "patchPlanId": "pp-bp-openssl-diag-20260612-173745",
+  "createdAt": "2026-06-12T10:55:13.976Z",
+  "changedFiles": [
+    "doc/man3/OPENSSL_riscvcap.pod"
+  ],
+  "gitDiff": "diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod\nindex 3113b98..dc7dfc9 100644\n--- a/doc/man3/OPENSSL_riscvcap.pod\n+++ b/doc/man3/OPENSSL_riscvcap.pod\n@@ -205,6 +205,20 @@ Only enable the vector extension:\n \n  export OPENSSL_riscvcap=\"rv64gc_v\"\n \n+Force the scalar Zbb SHA-256 path for testing or benchmarking:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_zbb\"\n+ openssl speed -evp sha256\n+\n+Force the vector SHA-256 path for testing or benchmarking on systems with\n+VLEN >= 128 and the required vector crypto extensions:\n+\n+ export OPENSSL_riscvcap=\"rv64gc_v_zvkb_zvknha\"\n+ openssl speed -evp sha256\n+\n+These overrides are intended for explicit testing. For normal execution on\n+Linux, prefer the capabilities detected by the kernel hardware probing support.\n+\n =head1 COPYRIGHT\n \n Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.\n",
+  "buildModeInvocation": "OpenCode 构建模式",
+  "notes": []
+}

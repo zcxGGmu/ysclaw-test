@@ -1,0 +1,14 @@
+{
+  "change": "document-riscv-aes-capability-overrides",
+  "phase": "design",
+  "mode": "full",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "55de84d668752a2c8e7c045247df69d49de7c940bd1bbfcbc0c895fcfe0bf8e2",
+  "files": [
+    { "path": "openspec/changes/document-riscv-aes-capability-overrides/proposal.md", "sha256": "620a58efd06e12d94b7bc6893f2f895a3dd31081dc19d7aa60d13ad0f48ae379" },
+    { "path": "openspec/changes/document-riscv-aes-capability-overrides/design.md", "sha256": "4aee085ac9687b056781070c93733e2186c0a2e350264c8618a26031b815cc65" },
+    { "path": "openspec/changes/document-riscv-aes-capability-overrides/tasks.md", "sha256": "2c958df8a939028c1dc3f2d49fa845339551784a38ee0d19d5e45cf732c0c120" },
+    { "path": "openspec/changes/document-riscv-aes-capability-overrides/specs/riscv-aes-capability-overrides/spec.md", "sha256": "782f4e857236cf36f40930a5016133f39eb635e81ebe19c38a0faedd42d2e64a" }
+  ]
+}

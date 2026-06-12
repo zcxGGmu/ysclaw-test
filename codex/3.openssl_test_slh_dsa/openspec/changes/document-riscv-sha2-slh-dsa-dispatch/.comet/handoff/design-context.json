@@ -1,0 +1,14 @@
+{
+  "change": "document-riscv-sha2-slh-dsa-dispatch",
+  "phase": "design",
+  "mode": "compact",
+  "canonical_spec": "openspec",
+  "generated_by": "comet-handoff.sh",
+  "context_hash": "7df34b9eeaee9e01dbc1acd6e84330f477916b98494954eb30cb980d00130fb1",
+  "files": [
+    { "path": "openspec/changes/document-riscv-sha2-slh-dsa-dispatch/proposal.md", "sha256": "0c4c150558e43771675375c07030971a2926081592a420448071cb694caa276d" },
+    { "path": "openspec/changes/document-riscv-sha2-slh-dsa-dispatch/design.md", "sha256": "f983b4425e3b3f24264f9ab5f8ab451ed85d57d114abb863737773901cd748b5" },
+    { "path": "openspec/changes/document-riscv-sha2-slh-dsa-dispatch/tasks.md", "sha256": "429528bfed4d575aa6e4115ba022b430722ce000234c0bc70d61c6f2bf28ee86" },
+    { "path": "openspec/changes/document-riscv-sha2-slh-dsa-dispatch/specs/riscv-sha2-slh-dsa-dispatch/spec.md", "sha256": "4eb20f3113c61051804e7a83fe7319e468fd382d7fb34fb34455efa43b0ed874" }
+  ]
+}

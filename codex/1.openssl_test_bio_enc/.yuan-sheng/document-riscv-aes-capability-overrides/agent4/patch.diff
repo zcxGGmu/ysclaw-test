@@ -1,0 +1,30 @@
+diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod
+index 3113b98..04f6210 100644
+--- a/doc/man3/OPENSSL_riscvcap.pod
++++ b/doc/man3/OPENSSL_riscvcap.pod
+@@ -205,6 +205,25 @@ Only enable the vector extension:
+ 
+  export OPENSSL_riscvcap="rv64gc_v"
+ 
++Enable RISC-V scalar AES crypto extensions for explicit testing or
++benchmarking:
++
++ export OPENSSL_riscvcap="rv64gc_zknd_zkne"
++
++Enable RISC-V vector AES crypto extensions for explicit testing or
++benchmarking:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvkned"
++
++Enable RISC-V vector AES-GCM crypto extensions for explicit testing or
++benchmarking:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvkg_zvkned"
++
++These AES-specific overrides are intended for diagnostics and benchmarking.
++For normal execution on Linux, applications should prefer the capabilities
++detected by hwprobe.
++
+ =head1 COPYRIGHT
+ 
+ Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.

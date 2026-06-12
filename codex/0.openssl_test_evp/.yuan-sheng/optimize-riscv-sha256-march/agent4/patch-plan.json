@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-bp-openssl-diag-20260612-173745",
+  "blueprintId": "bp-openssl-diag-20260612-173745",
+  "createdAt": "2026-06-12T10:49:56.181Z",
+  "objective": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+  "changes": [
+    {
+      "filePath": "doc/man3/OPENSSL_riscvcap.pod",
+      "action": "modify",
+      "rationale": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+      "instructions": [
+        "In the examples section, add a RISC-V SHA-256 benchmarking example that enables ZBB through OPENSSL_riscvcap.",
+        "Add a second example for the vector SHA-256 path that includes V, ZVKB, and one SHA-2 vector crypto extension.",
+        "State that these examples are for testing or benchmarking override scenarios and that normal production use should prefer kernel hwprobe detection.",
+        "Avoid changing capability parsing semantics or generic RISC-V build targets."
+      ],
+      "risk": "medium"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case openssl_test_evp"
+    ],
+    "requiredTests": [
+      "openssl_test_evp",
+      "openssl_riscvcap_sha256_docs",
+      "openssl_sha256_perf_target"
+    ]
+  },
+  "expectedDiffSummary": "Document SHA-256-specific OPENSSL_riscvcap examples so RISC-V benchmarks can force and verify the Zbb or vector crypto dispatch paths without changing generic RISC-V build targets."
+}

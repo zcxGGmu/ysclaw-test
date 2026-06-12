@@ -1,0 +1,38 @@
+{
+  "regressionId": "reg-pc-diag-20260612-180518",
+  "patchCandidateId": "pc-diag-20260612-180518",
+  "status": "error",
+  "command": "agent1 patch_regression --case openssl_test_slh_dsa",
+  "tests": [
+    {
+      "name": "openspec_validate_document_riscv_sha2_slh_dsa_dispatch",
+      "status": "pass",
+      "output": "Change 'document-riscv-sha2-slh-dsa-dispatch' is valid"
+    },
+    {
+      "name": "podchecker_OPENSSL_riscvcap",
+      "status": "pass",
+      "output": "doc/man3/OPENSSL_riscvcap.pod pod syntax OK."
+    },
+    {
+      "name": "git_diff_check",
+      "status": "pass",
+      "output": "git diff --check reported no whitespace errors."
+    },
+    {
+      "name": "riscv_sha256_dispatch_source_consistency",
+      "status": "pass",
+      "output": "rg confirmed the new OPENSSL_riscvcap SHA examples, existing RISC-V SHA-2 dispatch symbols, and the linux64-riscv64 target context."
+    },
+    {
+      "name": "agent1_patch_regression_openssl_test_slh_dsa",
+      "status": "error",
+      "output": "zsh:1: command not found: agent1"
+    }
+  ],
+  "artifacts": [
+    ".yuan-sheng/document-riscv-sha2-slh-dsa-dispatch/agent4/patch.diff",
+    "doc/man3/OPENSSL_riscvcap.pod"
+  ],
+  "summary": "Local documentation, OpenSpec, whitespace, and source consistency checks passed, but Agent1 regression could not run because the agent1 command is not available in this environment."
+}

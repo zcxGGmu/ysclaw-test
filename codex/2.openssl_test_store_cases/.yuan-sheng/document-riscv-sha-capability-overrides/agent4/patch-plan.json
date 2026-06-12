@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "ysclaw.patch_plan.v1",
+  "patchPlanId": "pp-diag-20260612-180925",
+  "blueprintId": "diag-20260612-180925",
+  "createdAt": "2026-06-12T11:54:02.004Z",
+  "objective": "The observed binary is using scalar SHA1_Final, but current OpenSSL source does not provide a RISC-V SHA-1 crypto dispatch path; the safe Agent4 action is to document RISC-V SHA/Zbb override combinations and the SHA-1 limitation for diagnostics.",
+  "changes": [
+    {
+      "filePath": "doc/man3/OPENSSL_riscvcap.pod",
+      "action": "modify",
+      "rationale": "The observed binary is using scalar SHA1_Final, but current OpenSSL source does not provide a RISC-V SHA-1 crypto dispatch path; the safe Agent4 action is to document RISC-V SHA/Zbb override combinations and the SHA-1 limitation for diagnostics.",
+      "instructions": [
+        "Inspect the existing EXAMPLES section before editing.",
+        "Add the minimum behavior-neutral documentation needed to show SHA-related RISC-V capability override combinations.",
+        "State that OPENSSL_riscvcap affects runtime-dispatched implementations and does not change compiler-selected base architecture or enable compile-time __riscv_zbb code generation.",
+        "State that current RISC-V SHA crypto dispatch covers SHA-2 paths and does not add a SHA-1 crypto dispatch path.",
+        "Avoid build-system, digest implementation, provider-dispatch, test recipe, and unrelated formatting changes."
+      ],
+      "risk": "low"
+    }
+  ],
+  "validationPlan": {
+    "regressionTarget": "agent1 patch_regression",
+    "commands": [
+      "agent1 patch_regression --case openssl_test_store_cases"
+    ],
+    "requiredTests": [
+      "openssl_test_store_cases",
+      "podchecker_OPENSSL_riscvcap"
+    ]
+  },
+  "expectedDiffSummary": "The candidate patch should modify only doc/man3/OPENSSL_riscvcap.pod to document RISC-V SHA/Zbb capability override examples and SHA-1 scope limits for blueprint diag-20260612-180925."
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "ysclaw.root_cause_blueprint.v1",
+  "blueprintId": "bp-openssl-diag-20260612-173745",
+  "source": {
+    "agent": "agent3",
+    "createdAt": "2026-06-12T17:37:45+08:00",
+    "software": "openssl",
+    "testcaseIds": [
+      "openssl_test_evp"
+    ]
+  },
+  "problem": {
+    "summary": "OpenSSL EVP SHA-256 on SOPHON SG2044 RISC-V executes sha256_block_data_order_riscv64 as a purely scalar hot path despite hardware RVV 1.0 and Zbb capability.",
+    "evidence": [
+      "perf stat for test_evp reports duration_time 210141573561 ns, IPC 1.881, L1_dcache_load_miss_rate 0.231%, and LLC_load_miss_rate 4.270%, indicating a compute-bound hotspot rather than a memory-bound workload.",
+      "perf annotate for fips.so shows sha256_block_data_order_riscv64 with 3388 samples and a hot loop composed of scalar lbu, lw, sw, srlw, sllw, or, xor, and, add, and addw instructions.",
+      "The annotated SHA-256 path contains no RVV v* instructions and no Zbb rotate or byte-swap acceleration instructions such as roriw or rev8.",
+      "Agent3 matched this before-state to known OpenSSL RISC-V SHA-256 optimizations that enable Zbb and vector crypto code generation when the target arch includes the relevant extension flags.",
+      "Agent4 source inspection found that current OpenSSL master already builds baseline, Zbb, and vector SHA-256 RISC-V implementations for asm_arch=riscv64 and selects them at runtime through hwprobe or OPENSSL_riscvcap capability bits."
+    ]
+  },
+  "rootCause": {
+    "summary": "The scalar SHA-256 profile is best addressed in current OpenSSL by documenting and validating the runtime RISC-V capability selection path: optimized SHA-256 implementations are present, but benchmarks must confirm hwprobe or OPENSSL_riscvcap exposes Zbb/vector crypto capabilities instead of assuming -march alone controls dispatch.",
+    "candidateFiles": [
+      "doc/man3/OPENSSL_riscvcap.pod"
+    ],
+    "performanceFactors": [
+      "RISC-V runtime capability selection",
+      "OPENSSL_riscvcap override syntax",
+      "SHA-256 RISC-V assembly/code generation",
+      "RVV vector crypto dispatch verification",
+      "Zbb rotate and byte-swap dispatch verification"
+    ]
+  },
+  "constraints": {
+    "riskLevel": "medium",
+    "mustPreserve": [
+      "Do not change generic RISC-V targets in a way that requires RVV or Zbb on hardware/toolchains that do not support those extensions.",
+      "Keep the patch minimal and focused on documenting the opt-in runtime capability path.",
+      "Preserve existing OpenSSL test behavior for non-RISC-V and generic RISC-V builds.",
+      "Do not modify generated assembly output without confirming the corresponding generator source."
+    ]
+  },
+  "validation": {
+    "requiredTests": [
+      "openssl_test_evp",
+      "openssl_riscvcap_sha256_docs",
+      "openssl_sha256_perf_target"
+    ],
+    "regressionCommand": "agent1 patch_regression --case openssl_test_evp"
+  }
+}

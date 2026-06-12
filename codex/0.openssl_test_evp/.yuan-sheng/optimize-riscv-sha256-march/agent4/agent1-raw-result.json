@@ -1,0 +1,50 @@
+{
+  "regressionId": "reg-pc-bp-openssl-diag-20260612-173745",
+  "patchCandidateId": "pc-bp-openssl-diag-20260612-173745",
+  "status": "error",
+  "command": "agent1 patch_regression --case openssl_test_evp",
+  "tests": [
+    {
+      "name": "agent1 patch_regression --case openssl_test_evp",
+      "status": "error",
+      "output": "agent1 command is not available in the current environment."
+    },
+    {
+      "name": "podchecker doc/man3/OPENSSL_riscvcap.pod",
+      "status": "pass",
+      "output": "doc/man3/OPENSSL_riscvcap.pod pod syntax OK."
+    },
+    {
+      "name": "perl Configure --help RISC-V target listing",
+      "status": "pass",
+      "output": "Output includes linux64-riscv64, linux32-riscv32, BSD-riscv64, and android-riscv64."
+    },
+    {
+      "name": "RISC-V SHA-256 dispatcher source check",
+      "status": "pass",
+      "output": "crypto/sha/sha_riscv.c selects vector SHA-256 when RISCV_HAS_ZVKB and RISCV_HAS_ZVKNHA or RISCV_HAS_ZVKNHB are present, selects Zbb SHA-256 when RISCV_HAS_ZBB is present, and otherwise falls back to sha256_block_data_order_riscv64."
+    },
+    {
+      "name": "perl util/find-doc-nits",
+      "status": "error",
+      "output": "find-doc-nits requires configdata.pm. Out-of-tree Configure failed in this environment with unsupported inherited options: no-aes, no-hmac."
+    },
+    {
+      "name": "target hardware openssl speed -evp sha256",
+      "status": "error",
+      "output": "Not run: current host is macOS arm64, not the SOPHON SG2044 RISC-V target."
+    },
+    {
+      "name": "target hardware perf annotate sha256_block_data_order",
+      "status": "error",
+      "output": "Not run: requires the RISC-V target hardware and rebuilt binary."
+    }
+  ],
+  "artifacts": [
+    ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch.diff",
+    ".yuan-sheng/optimize-riscv-sha256-march/agent4/patch-candidate.json",
+    ".yuan-sheng/optimize-riscv-sha256-march/reports/test-report.md",
+    ".yuan-sheng/optimize-riscv-sha256-march/reports/development-summary.md"
+  ],
+  "summary": "Agent1 regression could not be executed because agent1 is unavailable. Local documentation syntax, target listing, and source-path checks passed; RISC-V hardware performance verification remains required."
+}

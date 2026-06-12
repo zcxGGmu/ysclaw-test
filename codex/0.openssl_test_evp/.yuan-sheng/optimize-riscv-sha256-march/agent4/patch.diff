@@ -1,0 +1,25 @@
+diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod
+index 3113b98..dc7dfc9 100644
+--- a/doc/man3/OPENSSL_riscvcap.pod
++++ b/doc/man3/OPENSSL_riscvcap.pod
+@@ -205,6 +205,20 @@ Only enable the vector extension:
+ 
+  export OPENSSL_riscvcap="rv64gc_v"
+ 
++Force the scalar Zbb SHA-256 path for testing or benchmarking:
++
++ export OPENSSL_riscvcap="rv64gc_zbb"
++ openssl speed -evp sha256
++
++Force the vector SHA-256 path for testing or benchmarking on systems with
++VLEN >= 128 and the required vector crypto extensions:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvknha"
++ openssl speed -evp sha256
++
++These overrides are intended for explicit testing. For normal execution on
++Linux, prefer the capabilities detected by the kernel hardware probing support.
++
+ =head1 COPYRIGHT
+ 
+ Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.
