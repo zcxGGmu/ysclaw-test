@@ -114,3 +114,14 @@
 - Destination groups are `0.openssl_test_evp`, `1.openssl_test_bio_enc`, `2.openssl_test_store_cases`, and `3.openssl_test_slh_dsa`.
 - Each group preserves `.yuan-sheng`, `openspec`, and `docs/superpowers` artifact structure.
 - Verified key Agent4/Agent5 files exist in each group and no OpenSSL source tree directories were moved into `codex`.
+
+# Redo Agent4 Work With Code-Level OpenSSL Optimizations
+
+- [x] Re-read four root-cause blueprints and relevant OpenSSL RISC-V code paths
+- [ ] Write and confirm a code-level implementation plan before source edits
+- [ ] Create or switch to a clean optimization worktree
+- [ ] Add focused regression tests for RISC-V capability parsing/dispatch behavior
+- [ ] Implement minimal code-level RISC-V optimization changes
+- [ ] Run available build/test/documentation/schema verification
+- [ ] Regenerate Agent4/Agent5 artifacts under `codex`
+- [ ] Record final verification status honestly
