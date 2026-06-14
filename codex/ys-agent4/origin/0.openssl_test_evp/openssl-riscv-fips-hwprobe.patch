@@ -1,0 +1,19 @@
+diff --git a/include/arch/riscv_arch.h b/include/arch/riscv_arch.h
+index ddc36e5..da691ec 100644
+--- a/include/arch/riscv_arch.h
++++ b/include/arch/riscv_arch.h
+@@ -14,7 +14,13 @@
+ #include <stddef.h>
+ #include <stdint.h>
+ 
+-#if defined(OPENSSL_SYS_LINUX) && !defined(FIPS_MODULE)
++#if defined(OPENSSL_SYS_LINUX)
++/*
++ * The FIPS provider also calls OPENSSL_cpuid_setup() during provider init and
++ * uses the same RISC-V dispatch helpers as libcrypto. Keep hwprobe available
++ * there as well, otherwise provider-local capability state stays empty unless
++ * OPENSSL_riscvcap is set explicitly.
++ */
+ #if __has_include(<asm/hwprobe.h>)
+ #include <sys/syscall.h>
+ #/*
