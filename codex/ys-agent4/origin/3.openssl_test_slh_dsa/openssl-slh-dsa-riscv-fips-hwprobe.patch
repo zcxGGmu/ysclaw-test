@@ -1,0 +1,51 @@
+diff --git a/doc/man3/OPENSSL_riscvcap.pod b/doc/man3/OPENSSL_riscvcap.pod
+index 3113b98..c5d9a63 100644
+--- a/doc/man3/OPENSSL_riscvcap.pod
++++ b/doc/man3/OPENSSL_riscvcap.pod
+@@ -205,6 +205,27 @@ Only enable the vector extension:
+ 
+  export OPENSSL_riscvcap="rv64gc_v"
+ 
++Enable the RISC-V Zbb SHA-2 implementations for dispatcher testing:
++
++ export OPENSSL_riscvcap="rv64gc_zbb"
++
++Enable the RISC-V vector SHA-256 implementation for dispatcher testing:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvknha"
++
++Enable the RISC-V vector SHA-512 implementation for dispatcher testing:
++
++ export OPENSSL_riscvcap="rv64gc_v_zvkb_zvknhb"
++
++These SHA-specific overrides are intended for diagnostics and benchmarking.
++They affect run-time dispatched implementations and do not change the
++compiler-selected base architecture, the ELF Tag_RISCV_arch value, or enable
++compile-time C<__riscv_zbb> code generation. Vector length remains detected
++from hardware and is not overridden by these examples. For normal Linux
++execution, prefer hwprobe-detected capabilities over setting SHA-specific
++overrides. Current RISC-V SHA crypto dispatch covers SHA-256 and SHA-512
++paths; it does not add a RISC-V SHA-1 crypto dispatch path.
++
+ =head1 COPYRIGHT
+ 
+ Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.
+diff --git a/include/arch/riscv_arch.h b/include/arch/riscv_arch.h
+index ddc36e5..da691ec 100644
+--- a/include/arch/riscv_arch.h
++++ b/include/arch/riscv_arch.h
+@@ -14,7 +14,13 @@
+ #include <stddef.h>
+ #include <stdint.h>
+ 
+-#if defined(OPENSSL_SYS_LINUX) && !defined(FIPS_MODULE)
++#if defined(OPENSSL_SYS_LINUX)
++/*
++ * The FIPS provider also calls OPENSSL_cpuid_setup() during provider init and
++ * uses the same RISC-V dispatch helpers as libcrypto. Keep hwprobe available
++ * there as well, otherwise provider-local capability state stays empty unless
++ * OPENSSL_riscvcap is set explicitly.
++ */
+ #if __has_include(<asm/hwprobe.h>)
+ #include <sys/syscall.h>
+ #/*
